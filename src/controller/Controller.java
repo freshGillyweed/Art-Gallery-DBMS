@@ -1,8 +1,12 @@
+package controller;
+import database.DatabaseConnectionHandler;
+import ui.LoginWindow;
+import delegates.LoginWindowDelegate;
 /**
  * This is the main controller class that will orchestrate everything.
  * This is based off the Sample Java Project (Bank.java)
  */
-public class Controller {
+public class Controller implements LoginWindowDelegate {
     private DatabaseConnectionHandler dbHandler = null;
     private LoginWindow loginWindow = null;
 
@@ -27,9 +31,9 @@ public class Controller {
             // Once connected, remove login window and start text transaction flow
             loginWindow.dispose();
 
-            TerminalTransactions transaction = new TerminalTransactions();
-            transaction.setupDatabase(this);
-            transaction.showMainMenu(this);
+//            TerminalTransactions transaction = new TerminalTransactions();
+//            transaction.setupDatabase(this);
+//            transaction.showMainMenu(this);
         } else {
             loginWindow.handleLoginFailed();
 

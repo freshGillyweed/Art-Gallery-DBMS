@@ -1,3 +1,5 @@
+package ui;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import src.delegates.LoginWindowDelegate;
+import delegates.LoginWindowDelegate;
 /**
  * The class is only responsible for displaying and handling the login GUI.
  */
@@ -108,7 +110,7 @@ public class LoginWindow extends JFrame implements ActionListener {
         // center the frame
         Dimension d = this.getToolkit().getScreenSize();
         Rectangle r = this.getBounds();
-        this.setLocation( (d.width - r.width)/2, (d.height - r.height)/2 );
+        this.setLocation((d.width - r.width) / 2, (d.height - r.height) / 2);
 
         // make the window visible
         this.setVisible(true);
@@ -133,3 +135,4 @@ public class LoginWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         delegate.login(usernameField.getText(), String.valueOf(passwordField.getPassword()));
     }
+}

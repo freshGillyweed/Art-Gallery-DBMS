@@ -1,3 +1,4 @@
+package model;
 
 /**
  *  The intent for this class is to update/store information about an Event
