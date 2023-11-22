@@ -1,5 +1,6 @@
 package model;
 
+// ResearcherModel extends EmployeeModel to model ISA relationship
 public class ResearcherModel extends EmployeeModel{
     private String researchInterest;
 
