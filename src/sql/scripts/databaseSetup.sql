@@ -63,7 +63,7 @@ CREATE TABLE worksOn
  projectID INTEGER,
  PRIMARY KEY (employeeID, projectID),
  FOREIGN KEY (employeeID) REFERENCES Employees(employeeID),
- FOREIGN KEY (ProjectID) REFERENCES ProjectTitle(projectID));
+ FOREIGN KEY (ProjectID) REFERENCES Project(projectID));
 
 CREATE TABLE Donor
 (donorID INTEGER PRIMARY KEY,
