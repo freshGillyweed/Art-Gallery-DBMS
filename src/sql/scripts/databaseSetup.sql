@@ -52,7 +52,7 @@ CREATE TABLE Researcher
 CREATE TABLE Project
 (projectID INTEGER PRIMARY KEY,
  title VARCHAR(50),
- budget DECIMAL,
+ budget INTEGER,
  status VARCHAR(50),
  startDate VARCHAR(50),
  endDate VARCHAR(50));
@@ -224,15 +224,15 @@ INSERT INTO worksOn (employeeID, projectID)
 VALUES (2014, 1004);
 
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1000, 'Women artists in 19C', 10.0, 'ongoing', '2021-12-23', '2024-11-11');
+VALUES (1000, 'Women artists in 19C', 1000, 'ongoing', '2021-12-23', '2024-11-11');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1001, 'Asian Contemporary Art', 20.5, 'completed', '2020-02-01', '2022-04-03');
+VALUES (1001, 'Asian Contemporary Art', 2000, 'completed', '2020-02-01', '2022-04-03');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1002, 'Evolution of Printmaking Techniques', 30.0, 'not started', '2024-06-20', '2026-11-03');
+VALUES (1002, 'Evolution of Printmaking Techniques', 3000, 'not started', '2024-06-20', '2026-11-03');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1003, 'Digital Evolution in Conservation', 30.5, 'completed', '2022-05-04', '2023-02-02');
+VALUES (1003, 'Digital Evolution in Conservation', 3500, 'completed', '2022-05-04', '2023-02-02');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1004, 'Cultural Heritage Preservation', 40.0, 'not started', '2026-01-01', '2029-04-04');
+VALUES (1004, 'Cultural Heritage Preservation', 4000, 'not started', '2026-01-01', '2029-04-04');
 
 INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (1, 'John Doe', 500, '123-456-7890');
 INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (2, 'Jane Smith', 750, '987-654-3210');
@@ -240,11 +240,11 @@ INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (3, 'Alic
 INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (4, 'Bob Williams', 1000, '111-222-3333');
 INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (5, 'Eva Brown', 200, '777-888-9999');
 
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (1, 1000, 500.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (2, 1001, 750.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (3, 1002, 300.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (4, 1003, 1000.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (5, 1004, 200.00);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (1, 1000, 500);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (2, 1001, 750);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (3, 1002, 300);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (4, 1003, 1000);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (5, 1004, 200);
 
 
 

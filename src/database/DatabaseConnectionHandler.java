@@ -1,5 +1,8 @@
 package database;
 
+import model.ProjectModel;
+import util.PrintablePreparedStatement;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -59,6 +62,39 @@ public class DatabaseConnectionHandler {
 
     public void databaseSetup() {
         // TODO: IMPLEMENT
+    }
+
+    public int getAverageBudgetOverStatus(int threshold) {
+        //ProjectModel result = null;
+        int result = 0;
+        try {
+            String query = "SELECT AVG(average_budget_per_status) " +
+                    "FROM ( " +
+                    "    SELECT status, AVG(budget) AS average_budget_per_status " +
+                    "    FROM Project " +
+                    "    WHERE budget > ? " +
+                    "    GROUP BY status " +
+                    ")"; //") AS subquery";
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            ps.setInt(1, threshold);
+            ResultSet rs = ps.executeQuery();
+
+            result = rs.getInt("AVG(average_budget_per_status)");
+
+            /*result =  new ProjectModel(rs.getInt("projectID"),
+                    rs.getString("title"),
+                    rs.getDouble("budget"),
+                    rs.getString("status"),
+                    rs.getString("startDate"),
+                    rs.getString("endDate"));
+             */
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result;
     }
 
 }

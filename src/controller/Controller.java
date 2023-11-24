@@ -1,7 +1,8 @@
 package controller;
+
 import database.DatabaseConnectionHandler;
-import ui.LoginWindow;
 import delegates.LoginWindowDelegate;
+import ui.LoginWindow;
 /**
  * This is the main controller class that will orchestrate everything.
  * This is based off the Sample Java Project (Bank.java)
@@ -43,6 +44,11 @@ public class Controller implements LoginWindowDelegate {
                 System.exit(-1);
             }
         }
+    }
+
+    public void showAverageBudgetOverStatus(int threshold) {
+       int average = dbHandler.getAverageBudgetOverStatus(threshold);
+        System.out.println("Average Budget Over Status for Projects with budgets higher than " + threshold + ": " + average);
     }
 
     public static void main(String[] args) {
