@@ -71,6 +71,7 @@ CREATE TABLE Donor
  totalDonationValue INTEGER,
  phoneNum VARCHAR(50));
 
+
 CREATE TABLE Funds
 (donorID INTEGER,
  projectID INTEGER,
@@ -88,6 +89,8 @@ CREATE TABLE Artist
  PRIMARY KEY (artistID),
  UNIQUE (name, dateOfBirth));
 
+
+
 CREATE TABLE Artwork
 (artworkID INTEGER,
  artistID INTEGER,
@@ -97,6 +100,7 @@ CREATE TABLE Artwork
  displayMedium VARCHAR(50) NOT NULL,
  donorID INTEGER,
  featureID INTEGER,
+ value INTEGER,
 PRIMARY KEY (artworkID, artistID),
 FOREIGN KEY (artistID) REFERENCES Artist(artistID) ON DELETE CASCADE,
 FOREIGN KEY (donorID) REFERENCES Donor(donorID) ON DELETE SET NULL,
@@ -252,9 +256,35 @@ INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (4, 1003, 1000.00);
 INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (5, 1004, 200.00);
 
 
+INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
+VALUES 	(51, 'Andy Warhol', 'August 6, 1928', 'February 22, 1987', 76);
+INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
+VALUES (52, 'Leonardo Da Vinci', 'April 15, 1452', 'May 2, 1519', 96);
+INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
+VALUES (53, 'Pablo Picasso', 'October 25, 1881', 'April 8, 1973', 86);
+INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
+VALUES (54, 'Vincent van Gogh', 'March 30, 1853', 'July 29, 1890', 92);
+INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
+VALUES (55, 'Gerhard Richter', 'February 9, 1932', NULL, 68);
 
+INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
+VALUES	(91, 51, 'Green Coca-Cola Bottles', '82.8 in by 57.1 in', '1962', 78000000, 14, 302, 'painting');
+INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
+VALUES (92, 52, 'The Virgin and Child with Saint Anne', '51 in by 66.3 in', '1510', 5780000000, 13, 301, 'painting');
+INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
+VALUES (93, 51, 'Big Campbells Soup Can 19c (Beef Noodle)', '8.3 x 4.3 in.', '1962', 88000000, 11, 303, 'painting');
+INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
+VALUES(94, 55, 'Two Candles (Zwei Kerzen)', '47 1/4 × 39 1/2 in.', '1982', 9000000, 12, 305, 'painting');
+INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
+VALUES(95, 54, 'The Potato Eaters', '82 x 114 cm', '1885', 54000000, 14, 304, 'painting');
 
-
-
-
-
+INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
+VALUES	(301, 'Emerging Echoes: New Artists Unveiled', '25/10/22', '9/8/23', 966178, 'room 15', 2000, 67);
+INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
+VALUES	(302, 'Urban Odyssey: Cityscape Creations', '15/7/15', '18/8/17', 67551092, 'Bianca Ballroom', 2004, 89);
+INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
+VALUES	(303, '3D Art Extravaganza', '18/2/18', '19/5/20', 11000000, 'Ferguson Garden', 2003, 99);
+INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
+VALUES	(304, 'Echoes of the Past: Historical Art Revival', '19/4/20', '20/7/25', 73827361, 'room 209', 2002, 78);
+INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
+VALUES	(305, 'Art for Environmental Change', '23/12/9', '15/6/17', 161657192, 'room 112', 2001, 92);
