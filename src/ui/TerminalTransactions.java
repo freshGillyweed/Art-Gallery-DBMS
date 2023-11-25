@@ -5,6 +5,9 @@ import delegates.TerminalTransactionsDelegate;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class TerminalTransactions {
 
@@ -12,11 +15,13 @@ public class TerminalTransactions {
     private static final String WARNING_TAG = "[WARNING]";
     private static final int INVALID_INPUT = Integer.MIN_VALUE;
     private static final int EMPTY_INPUT = 0;
+    private Scanner input;
 
     private BufferedReader bufferedReader = null;
     private TerminalTransactionsDelegate delegate = null;
 
     public TerminalTransactions() {
+        input = new Scanner(System.in);
     }
 
     public void setupDatabase(TerminalTransactionsDelegate delegate) {
@@ -74,8 +79,8 @@ public class TerminalTransactions {
                     case 1:
                         handleAverageProjectBudgetOption();
                         break;
-                    //case 2:
-                        //handleDeleteOption();
+                    case 2:
+                        handleProjectSelectionOption();
                         //break;
                     //case 3:
                         //handleUpdateOption();
@@ -104,6 +109,130 @@ public class TerminalTransactions {
        delegate.showAverageBudgetOverStatus(threshold);
     }
 
+    private void handleProjectSelectionOption() {
+            StringBuilder whereClause = null;
+            boolean keepGoing = true;
+            boolean isEmpty = false;
+            int addFilter;
+
+            while (keepGoing) {
+                System.out.println("Enter 1 to specify filters, 0 for no filters: ");
+                addFilter = readInteger(false);
+
+                if (addFilter == 1) {
+                    // loop to add filters (conditions)
+                    while (true) {
+                        appendCategory(whereClause);
+
+                        appendArithmeticOperator(whereClause);
+
+                        appendValue(whereClause);
+
+                        // ask user whether to add more filters
+                        System.out.println("Enter 1 to add more filters, otherwise 2");
+                        int moreFilters = readInteger(false);
+
+                        // get out of while loop
+                        if (moreFilters == 2) {break;}
+
+                        appendLogicalOperator(whereClause);
+                    }
+                } else {
+                    isEmpty = true;
+                }
+
+                delegate.showProjectSelectionInfo(String.valueOf(whereClause), isEmpty);
+            }
+    }
+
+    private void appendValue(StringBuilder whereClause) {
+        System.out.print("Enter value: ");
+        String value = input.next();
+        input.nextLine();
+
+        whereClause.append(value);
+    }
+
+    private void appendLogicalOperator(StringBuilder whereClause) {
+        System.out.println("1 for AND");
+        System.out.println("2 for OR");
+        System.out.print("Choose a logical operator: ");
+        int logicalOperator = readInteger(false);
+
+        // append logical operator
+        switch (logicalOperator) {
+            case 1 -> whereClause.append("AND ");
+            case 2 -> whereClause.append("OR ");
+        }
+    }
+
+    private void appendArithmeticOperator(StringBuilder whereClause) {
+        System.out.println("1 for = ");
+        System.out.println("2 for <> ");
+        System.out.println("3 for < ");
+        System.out.println("4 for > ");
+        System.out.println("5 for LIKE ");
+        System.out.print("Choose an arithmetic operator: ");
+        int arithmeticOperator = readInteger(false);
+
+        // append arithmetic operator
+        switch (arithmeticOperator) {
+            case 1 -> whereClause.append("= ");
+            case 2 -> whereClause.append("<> ");
+            case 3 -> whereClause.append("< ");
+            case 4 -> whereClause.append("> ");
+            case 5 -> whereClause.append("LIKE ");
+        }
+    }
+
+    private void appendCategory(StringBuilder whereClause) {
+        System.out.println("1 for Project ID");
+        System.out.println("2 for Title");
+        System.out.println("3 for Budget");
+        System.out.println("4 for Status");
+        System.out.println("5 for Start Date");
+        System.out.println("6 for End Date");
+        System.out.print("Choose a category: ");
+        int category = readInteger(false);
+
+        // append attribute
+        switch (category) {
+            case 1 -> whereClause.append("projectID ");
+            case 2 -> whereClause.append("title ");
+            case 3 -> whereClause.append("budget ");
+            case 4 -> whereClause.append("status ");
+            case 5 -> whereClause.append("startDate ");
+            case 6 -> whereClause.append("endDate: ");
+        }
+    }
+
+    public static List<String> getUserConditions() {
+        List<String> conditions = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        // Get user input for filtering conditions
+        System.out.println("Enter filtering conditions (Press Enter for each condition; leave blank to finish):");
+        while (true) {
+            System.out.print("Field: ");
+            String field = scanner.nextLine().trim();
+            if (field.isEmpty()) {
+                break;
+            }
+
+            System.out.print("Operator (=, >, <, LIKE, etc.): ");
+            String operator = scanner.nextLine().trim();
+
+            System.out.print("Value: ");
+            String value = scanner.nextLine().trim();
+
+            // Create condition string and add to the list
+            conditions.add(field + " " + operator + " ?");
+        }
+
+        scanner.close();
+        return conditions;
+    }
+
     private int readInteger(boolean allowEmpty) {
         String line = null;
         int input = INVALID_INPUT;
@@ -121,6 +250,7 @@ public class TerminalTransactions {
         }
         return input;
     }
+
 
     private String readLine() {
         String result = null;

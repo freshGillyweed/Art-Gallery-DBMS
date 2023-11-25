@@ -97,4 +97,38 @@ public class DatabaseConnectionHandler {
         return result;
     }
 
+    public ProjectModel[] getProjectSelectionInfo(String whereClause, boolean isEmpty) {
+        ArrayList<ProjectModel> result = new ArrayList<ProjectModel>();
+
+        try {
+            String query;
+            if (isEmpty) {
+                query = "SELECT * FROM Project";
+            } else {
+                query = "SELECT * FROM Project WHERE ";
+                query = query + whereClause;
+            }
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            ResultSet rs = ps.executeQuery();
+
+
+            while(rs.next()) {
+                ProjectModel model = new ProjectModel(rs.getInt("projectID"),
+                        rs.getString("title"),
+                        rs.getInt("budget"),
+                        rs.getString("status"),
+                        rs.getString("startDate"),
+                        rs.getString("endDate"));
+                result.add(model);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+
+        return result.toArray(new ProjectModel[result.size()]);
+    }
+
 }
