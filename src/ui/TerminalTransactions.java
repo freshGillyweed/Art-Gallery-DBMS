@@ -5,8 +5,6 @@ import delegates.TerminalTransactionsDelegate;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class TerminalTransactions {
@@ -21,7 +19,6 @@ public class TerminalTransactions {
     private TerminalTransactionsDelegate delegate = null;
 
     public TerminalTransactions() {
-        input = new Scanner(System.in);
     }
 
     public void setupDatabase(TerminalTransactionsDelegate delegate) {
@@ -63,12 +60,12 @@ public class TerminalTransactions {
 
         while (choice != 5) {
             System.out.println();
-            System.out.println("1. Insert branch");
-            System.out.println("2. Delete branch");
-            System.out.println("3. Update branch name");
-            System.out.println("4. Show branch");
-            System.out.println("5. Quit");
-            System.out.print("Please choose one of the above 5 options: ");
+            System.out.println("1. Show average project budget over status");
+            System.out.println("2. Show filtered information from project");
+            System.out.println("3. View any number of attributes from any table");
+            //System.out.println("4. Show branch");
+            //System.out.println("5. Quit");
+            //System.out.print("Please choose one of the above 5 options: ");
 
             choice = readInteger(false);
 
@@ -81,9 +78,9 @@ public class TerminalTransactions {
                         break;
                     case 2:
                         handleProjectSelectionOption();
-                        //break;
-                    //case 3:
-                        //handleUpdateOption();
+                        break;
+                    case 3:
+                        handleProjectionOption();
                         //break;
                     //case //4:
                         //delegate.showBranch();
@@ -97,6 +94,13 @@ public class TerminalTransactions {
                 }
             }
         }
+    }
+
+    private void handleProjectionOption() {
+        //DatabaseMetaData metaData = conn.getMetaData();
+        // User input is handled in Controller class due to issues pertaining to Connection
+        delegate.showProjectionResult();
+
     }
 
     private void handleAverageProjectBudgetOption() {
@@ -146,6 +150,8 @@ public class TerminalTransactions {
     }
 
     private void appendValue(StringBuilder whereClause) {
+        input = new Scanner(System.in);
+        input.useDelimiter("\\n");
         System.out.print("Enter value: ");
         String value = input.next();
         input.nextLine();
@@ -204,33 +210,6 @@ public class TerminalTransactions {
             case 5 -> whereClause.append("startDate ");
             case 6 -> whereClause.append("endDate: ");
         }
-    }
-
-    public static List<String> getUserConditions() {
-        List<String> conditions = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
-
-        // Get user input for filtering conditions
-        System.out.println("Enter filtering conditions (Press Enter for each condition; leave blank to finish):");
-        while (true) {
-            System.out.print("Field: ");
-            String field = scanner.nextLine().trim();
-            if (field.isEmpty()) {
-                break;
-            }
-
-            System.out.print("Operator (=, >, <, LIKE, etc.): ");
-            String operator = scanner.nextLine().trim();
-
-            System.out.print("Value: ");
-            String value = scanner.nextLine().trim();
-
-            // Create condition string and add to the list
-            conditions.add(field + " " + operator + " ?");
-        }
-
-        scanner.close();
-        return conditions;
     }
 
     private int readInteger(boolean allowEmpty) {

@@ -3,10 +3,7 @@ package database;
 import model.ProjectModel;
 import util.PrintablePreparedStatement;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -64,6 +61,10 @@ public class DatabaseConnectionHandler {
         // TODO: IMPLEMENT
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
     public int getAverageBudgetOverStatus(int threshold) {
         //ProjectModel result = null;
         int result = 0;
@@ -97,7 +98,27 @@ public class DatabaseConnectionHandler {
         return result;
     }
 
-    public ProjectModel[] getProjectSelectionInfo(String whereClause, boolean isEmpty) {
+    public ResultSet getProjectionResults(String query) {
+        // since we dont know what is returned, just print it here or RETURN ResultSet rs
+        // return null;// stub
+
+        ResultSet rs;
+
+        try {
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            rs = ps.executeQuery();
+
+            ResultSetMetaData metaData = rs.getMetaData();
+            //int columnCount = metaData.getColumnCount();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rs;
+    }
+
+        public ProjectModel[] getProjectSelectionInfo(String whereClause, boolean isEmpty) {
         ArrayList<ProjectModel> result = new ArrayList<ProjectModel>();
 
         try {
