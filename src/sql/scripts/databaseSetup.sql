@@ -121,11 +121,7 @@ CREATE TABLE Visitor (
                          visitorID INTEGER PRIMARY KEY,
                          name VARCHAR(50),
                          phoneNum INTEGER,
-                         eventID INTEGER,
-                         exhibitionID INTEGER,
-                         UNIQUE (name, phoneNum),
-                         FOREIGN KEY (eventID) REFERENCES Event(eventID),
-                         FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID)
+                         UNIQUE (name, phoneNum)
 );
 
 CREATE TABLE ParticipateIn (
@@ -251,9 +247,9 @@ INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (3, 1002, 300.00);
 INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (4, 1003, 1000.00);
 INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (5, 1004, 200.00);
 
-INSERT INTO Visitor (visitorID, name, phoneNum, eventID, exhibitionID) VALUES (1, 'John Smith', '123-456-7890', 1, 101);
-INSERT INTO Visitor (visitorID, name, phoneNum, eventID, exhibitionID) VALUES (2, 'Alice Johnson', '987-654-3210', 2, 102);
-INSERT INTO Visitor (visitorID, name, phoneNum, eventID, exhibitionID) VALUES (3, 'Bob Davis', '555-111-2222', 3, 103);
+INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (1, 'John Smith', '123-456-7890');
+INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (2, 'Alice Johnson', '987-654-3210');
+INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (3, 'Bob Davis', '555-111-2222');
 
 INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (1, 100, 'Venue A', '15/05/23', 150, 'Art Show A', 201);
 INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (2, 200, 'Venue B', '20/06/23', 250, 'Concert B', 202);
