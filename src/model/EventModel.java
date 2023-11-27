@@ -10,13 +10,15 @@ public class EventModel {
     private final String date;
     private final int capacity;
     private final int eventID;
+    private final String title;
 
-    public EventModel(int eventID, String date, String location, int ticketSold, int capacity) {
+    public EventModel(int eventID, String date, String location, int ticketSold, int capacity, String title) {
         this.eventID = eventID;
         this.date = date;
         this.location = location;
         this.ticketSold = ticketSold;
         this.capacity = capacity;
+        this.title = title;
     }
 
     // GETTER METHODS
@@ -37,5 +39,9 @@ public class EventModel {
     }
     public int getEventID() {
         return eventID;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
