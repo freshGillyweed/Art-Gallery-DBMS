@@ -53,7 +53,7 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     }
 
     public void showAverageBudgetOverStatus(int threshold) {
-       int average = dbHandler.getAverageBudgetOverStatus(threshold);
+       double average = dbHandler.getAverageBudgetOverStatus(threshold);
         System.out.println("Average Budget Over Status for Projects with budgets higher than " + threshold + ": " + average);
     }
 
