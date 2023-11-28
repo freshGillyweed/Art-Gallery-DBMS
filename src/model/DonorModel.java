@@ -1,8 +1,4 @@
-//CREATE TABLE Donor
-//        (donorID INTEGER PRIMARY KEY,
-//        name VARCHAR(50),
-//        totalDonationValue INTEGER,
-//        phoneNum VARCHAR(50));
+package model;
 
 public class DonorModel {
 

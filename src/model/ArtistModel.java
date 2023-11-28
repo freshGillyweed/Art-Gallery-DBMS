@@ -1,12 +1,4 @@
-//CREATE TABLE Artist
-//        ( artistID INTEGER,
-//        name VARCHAR(50) NOT NULL,
-//        dateOfBirth VARCHAR(50) NOT NULL,
-//        dateOfDeath VARCHAR(50),
-//        skillLevel INTEGER,
-//        PRIMARY KEY (artistID),
-//        UNIQUE (name, dateOfBirth));
-
+package model;
 
 
 public class ArtistModel {

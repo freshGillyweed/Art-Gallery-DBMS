@@ -1,19 +1,4 @@
-//CREATE TABLE Artwork
-//        (artworkID INTEGER,
-//        artistID INTEGER,
-//        title VARCHAR(50) NOT NULL,
-//        dimensions VARCHAR(50),
-//        dateCreated VARCHAR(50) NOT NULL,
-//        displayMedium VARCHAR(50) NOT NULL,
-//        donorID INTEGER,
-//        featureID INTEGER,
-//        value INTEGER,
-//        PRIMARY KEY (artworkID, artistID),
-//        FOREIGN KEY (artistID) REFERENCES Artist(artistID) ON DELETE CASCADE,
-//        FOREIGN KEY (donorID) REFERENCES Donor(donorID) ON DELETE SET NULL,
-//        FOREIGN KEY (featureID) REFERENCES Exhibition(exhibitionID) ON DELETE SET NULL,
-//        UNIQUE (dateCreated, title, artistID));
-
+package model;
 
 public class ArtworkModel {
 

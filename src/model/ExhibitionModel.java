@@ -1,15 +1,4 @@
-//CREATE TABLE Exhibition
-//        (exhibitionID INTEGER,
-//        title VARCHAR(50),
-//        startDate VARCHAR(50),
-//        endDate VARCHAR(50),
-//        visitorCount INTEGER,
-//        location VARCHAR(50),
-//        curatorID INTEGER,
-//        rating INTEGER,
-//        PRIMARY KEY (exhibitionID),
-//        FOREIGN KEY (curatorID) REFERENCES Curator(employeeID),
-//        UNIQUE (startDate, location));
+package model;
 
 public class ExhibitionModel {
 

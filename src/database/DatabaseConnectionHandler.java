@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.io.Reader;
 
 /**
  * This class handles all database related transactions
@@ -57,8 +58,23 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public void databaseSetup() {
-        // TODO: IMPLEMENT
-    }
 
+    // runs the database setup script
+    public void databaseSetup() throws RuntimeException {
+        Reader reader = null;
+
+        try {
+            reader = new java.io.FileReader("/sql/scripts/databaseSetup.sql");
+        } catch (Exception e) {
+            throw new RuntimeException("Error opening databaseSetup.sql");
+        }
+
+        util.ScriptRunner
+        try {
+            util.SccScriptRunner script = new ScriptRunner(connection, true, true);
+            script.runScript(reader);
+        } catch (Exception e) {
+            throw new RuntimeException("Error running script.  Cause: " + e, e);
+        }
+    }
 }
