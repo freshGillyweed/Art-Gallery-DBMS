@@ -70,6 +70,10 @@ public class DatabaseConnectionHandler {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
+        populateEmployees();
+    }
+
+    private static void populateEmployees() {
         EmployeeModel employee1 = new EmployeeModel(2000, "111-222-333", "John Smith");
         //insertBranch(employee1);
         EmployeeModel employee2 = new EmployeeModel(2001, "111-222-334", "Daniel Lee");
