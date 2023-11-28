@@ -62,7 +62,7 @@ CREATE TABLE worksOn
  projectID INTEGER,
  PRIMARY KEY (employeeID, projectID),
  FOREIGN KEY (employeeID) REFERENCES Employees(employeeID),
- FOREIGN KEY (ProjectID) REFERENCES ProjectTitle(projectID));
+ FOREIGN KEY (ProjectID) REFERENCES Project(projectID));
 
 CREATE TABLE Donor
 (donorID INTEGER PRIMARY KEY,
@@ -116,36 +116,40 @@ CREATE TABLE Exhibition
  UNIQUE (startDate, location));
 
 
-CREATE TABLE Visitor
-(visitorID INTEGER PRIMARY KEY,
- name VARCHAR(50),
- phoneNum INTEGER,
- eventID INTEGER,
- exhibitionID INTEGER,
- UNIQUE (name, phoneNum),
- FOREIGN KEY (eventID) REFERENCES Event(eventID),
- FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID));
+CREATE TABLE Visitor (
+                         visitorID INTEGER PRIMARY KEY,
+                         name VARCHAR(50),
+                         phoneNum INTEGER,
+                         eventID INTEGER,
+                         exhibitionID INTEGER,
+                         UNIQUE (name, phoneNum),
+                         FOREIGN KEY (eventID) REFERENCES Event(eventID),
+                         FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID)
+);
 
-CREATE TABLE ParticipateIn
-(eventID INTEGER,
- visitorID INTEGER,
- PRIMARY KEY (eventID, visitorID),
- FOREIGN KEY (eventID) REFERENCES Event(eventID),
- FOREIGN KEY (visitorID) REFERENCES Visitor(visitorID));
+CREATE TABLE ParticipateIn (
+                               eventID INTEGER,
+                               visitorID INTEGER,
+                               PRIMARY KEY (eventID, visitorID),
+                               FOREIGN KEY (eventID) REFERENCES Event(eventID),
+                               FOREIGN KEY (visitorID) REFERENCES Visitor(visitorID)
+);
 
-CREATE TABLE Host
-(eventID INTEGER,
- artistID INTEGER,
- PRIMARY KEY (eventID, artistID),
- FOREIGN KEY (eventID) REFERENCES Event(eventID),
- FOREIGN KEY (artistID) REFERENCES Artist(artistID));
+CREATE TABLE Host (
+                      eventID INTEGER,
+                      artistID INTEGER,
+                      PRIMARY KEY (eventID, artistID),
+                      FOREIGN KEY (eventID) REFERENCES Event(eventID),
+                      FOREIGN KEY (artistID) REFERENCES Artist(artistID)
+);
 
-CREATE TABLE Visit
-(visitorID INTEGER,
- exhibitionID INTEGER,
- PRIMARY KEY (visitorID, exhibitionID),
- FOREIGN KEY (visitorID) REFERENCES Visitor(visitorID),
- FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID));
+CREATE TABLE Visit (
+                       visitorID INTEGER,
+                       exhibitionID INTEGER,
+                       PRIMARY KEY (visitorID, exhibitionID),
+                       FOREIGN KEY (visitorID) REFERENCES Visitor(visitorID),
+                       FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID)
+);
 
 INSERT INTO Employees (employeeID, phoneNum, name)
 VALUES (2000, '111-222-333', 'John Smith');
@@ -224,6 +228,7 @@ INSERT INTO worksOn (employeeID, projectID)
 VALUES (2014, 1004);
 
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
+
 VALUES (1000, 'Women artists in 19C', 1000, 'ongoing', '2021-12-23', '2024-11-11');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
 VALUES (1001, 'Asian Contemporary Art', 2000, 'completed', '2020-02-01', '2022-04-03');
@@ -252,4 +257,27 @@ INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (5, 1004, 200);
 
 
 
+
+
+INSERT INTO Visitor (visitorID, name, phoneNum, eventID, exhibitionID) VALUES (1, 'John Smith', '123-456-7890', 1, 101);
+INSERT INTO Visitor (visitorID, name, phoneNum, eventID, exhibitionID) VALUES (2, 'Alice Johnson', '987-654-3210', 2, 102);
+INSERT INTO Visitor (visitorID, name, phoneNum, eventID, exhibitionID) VALUES (3, 'Bob Davis', '555-111-2222', 3, 103);
+
+INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (1, 100, 'Venue A', '15/05/23', 150, 'Art Show A', 201);
+INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (2, 200, 'Venue B', '20/06/23', 250, 'Concert B', 202);
+INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (3, 50, 'Venue C', '10/07/23', 100, 'Exhibition C', 203);
+
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (1,1);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (1,2);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (1,3);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (2,3);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (3,1);
+
+INSERT INTO Host (eventID, artistID) VALUES (1, 301);
+INSERT INTO Host (eventID, artistID) VALUES (1, 302);
+INSERT INTO Host (eventID, artistID) VALUES (1, 303);
+
+INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 101);
+INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 102);
+INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 103);
 
