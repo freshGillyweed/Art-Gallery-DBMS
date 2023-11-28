@@ -38,9 +38,9 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
             // Once connected, remove login window and start text transaction flow
             loginWindow.dispose();
 
-//            TerminalTransactions transaction = new TerminalTransactions();
-//            transaction.setupDatabase(this);
-//            transaction.showMainMenu(this);
+            TerminalTransactions transaction = new TerminalTransactions();
+            transaction.setupDatabase(this);
+            transaction.showMainMenu(this);
         } else {
             loginWindow.handleLoginFailed();
 
@@ -78,8 +78,13 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         try {
             Connection connection = dbHandler.getConnection();
             DatabaseMetaData metaData = connection.getMetaData();
-
-            ResultSet tables = metaData.getTables(null, null, "%", new String[]{"TABLE"});
+            
+            ResultSet resultSet = connection.createStatement().executeQuery("SELECT USER FROM DUAL");//
+            resultSet.next();//
+            String currentUser = resultSet.getString(1);//
+            
+            ResultSet tables = metaData.getTables(null, currentUser, "%", new String[]{"TABLE"});
+            //ResultSet tables = metaData.getTables(null, null, "%", new String[]{"TABLE"});
             while (tables.next()) {
                 String tableName = tables.getString("TABLE_NAME");
                 System.out.println("Table name: " + tableName);
@@ -89,6 +94,7 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
                     String columnName = columns.getString("COLUMN_NAME");
                     System.out.println("  Column name: " + columnName);
                 }
+                System.out.println("\n");
                 columns.close();
             }
             tables.close();
@@ -103,7 +109,7 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         System.out.print("Enter table name to perform projection: ");
         String tableName = input.next();
         input.nextLine();
-        query.append(tableName + " ");
+        //query.append(tableName + " ");
 
         while (true) {
             System.out.print("Enter attribute(column) to view: ");
@@ -116,8 +122,9 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
             if (moreColumns == 2) {
                 break;
             }
+            query.append(", ");
         }
-        query.append("FROM Project");
+        query.append("FROM " + tableName);
 
         ResultSet rs = dbHandler.getProjectionResults(String.valueOf(query));
 
