@@ -28,7 +28,7 @@ public class TerminalTransactions {
         int choice = INVALID_INPUT;
 
         while(choice != 1 && choice != 2) {
-            System.out.println("If you have a table called Branch in your database (capitialization of the name does not matter), it will be dropped and a new Branch table will be created.\nIf you want to proceed, enter 1; if you want to quit, enter 2.");
+            System.out.println("If you want to proceed, enter 1; if you want to quit, enter 2.");
 
             choice = readInteger(false);
 
@@ -63,9 +63,8 @@ public class TerminalTransactions {
             System.out.println("1. Show average project budget over status");
             System.out.println("2. Show filtered information from project");
             System.out.println("3. View any number of attributes from any table");
-            //System.out.println("4. Show branch");
-            //System.out.println("5. Quit");
-            //System.out.print("Please choose one of the above 5 options: ");
+            // Add text
+            System.out.print("Please choose one of the above 5 options: ");
 
             choice = readInteger(false);
 
@@ -81,12 +80,12 @@ public class TerminalTransactions {
                         break;
                     case 3:
                         handleProjectionOption();
-                        //break;
-                    //case //4:
-                        //delegate.showBranch();
+                        break;
+                    case 4:
+                        //add options
                         //break;
                     //case 5:
-                        //handleQuitOption();
+                        //add options
                         //break;
                     default:
                         System.out.println(WARNING_TAG + " The number that you entered was not a valid option.");
@@ -160,6 +159,7 @@ public class TerminalTransactions {
     }
 
     private void appendLogicalOperator(StringBuilder whereClause) {
+        System.out.println("\n");
         System.out.println("1 for AND");
         System.out.println("2 for OR");
         System.out.print("Choose a logical operator: ");
@@ -173,6 +173,7 @@ public class TerminalTransactions {
     }
 
     private void appendArithmeticOperator(StringBuilder whereClause) {
+        System.out.println("\n");
         System.out.println("1 for = ");
         System.out.println("2 for <> ");
         System.out.println("3 for < ");
@@ -192,6 +193,7 @@ public class TerminalTransactions {
     }
 
     private void appendCategory(StringBuilder whereClause) {
+        System.out.println("\n");
         System.out.println("1 for Project ID");
         System.out.println("2 for Title");
         System.out.println("3 for Budget");
