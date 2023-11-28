@@ -131,22 +131,30 @@ public class DatabaseConnectionHandler {
         return connection;
     }
 
-    public int getAverageBudgetOverStatus(int threshold) {
+    public double getAverageBudgetOverStatus(int threshold) {
         //ProjectModel result = null;
-        int result = 0;
+        double result = 0;
         try {
             String query = "SELECT AVG(average_budget_per_status) " +
-                    "FROM ( " +
-                    "    SELECT status, AVG(budget) AS average_budget_per_status " +
-                    "    FROM Project " +
-                    "    WHERE budget > ? " +
-                    "    GROUP BY status " +
-                    ")"; //") AS subquery";
+                    "FROM (" + "SELECT status, AVG(budget) AS average_budget_per_status " + "FROM Project " + "WHERE budget > ? " + "GROUP BY status " + ")"; //") AS subquery";
             PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
             ps.setInt(1, threshold);
             ResultSet rs = ps.executeQuery();
 
-            result = rs.getInt("AVG(average_budget_per_status)");
+            //result = rs.getDouble("AVG(average_budget_per_status)");
+            //ResultSet (rs.getDouble(1))
+
+            /*
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columns = metaData.getColumnCount();
+            for (int i = 1; i <= columns; i++) {
+                System.out.println("Column " + i + ": " + metaData.getColumnLabel(i) + " - Type: " + metaData.getColumnTypeName(i));
+            }*/
+
+            if (rs.next()) {
+                result = rs.getDouble(1); // Retrieve the value from the first column
+                //System.out.println("TEST: " + result);
+            }
 
             rs.close();
             ps.close();
