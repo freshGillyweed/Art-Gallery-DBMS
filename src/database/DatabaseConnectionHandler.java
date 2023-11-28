@@ -76,7 +76,6 @@ public class DatabaseConnectionHandler {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        createEmployeeModels();
     }
     private void insertEvent(EventModel event) {
         // CITE SAMPLE PROJECT
@@ -102,6 +101,8 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
+        
+        populateEmployees();
 
     }
 
@@ -143,7 +144,8 @@ public class DatabaseConnectionHandler {
         }
     }
     // private void insertExhibition(ExhibitionModel Exhibition)
-    private void createEmployeeModels() {
+
+    private static void populateEmployees() {
         EmployeeModel employee1 = new EmployeeModel(2000, "111-222-333", "John Smith");
         insertEmployee(employee1);
         EmployeeModel employee2 = new EmployeeModel(2001, "111-222-334", "Daniel Lee");

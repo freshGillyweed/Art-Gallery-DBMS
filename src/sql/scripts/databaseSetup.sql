@@ -121,7 +121,9 @@ CREATE TABLE Visitor (
                          visitorID INTEGER PRIMARY KEY,
                          name VARCHAR(50),
                          phoneNum INTEGER,
-                         UNIQUE (name, phoneNum)
+                         UNIQUE (name, phoneNum),
+                         FOREIGN KEY (eventID) REFERENCES Event(eventID),
+                         FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID)
 );
 
 CREATE TABLE ParticipateIn (
@@ -225,7 +227,7 @@ INSERT INTO worksOn (employeeID, projectID)
 VALUES (2014, 1004);
 
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1000, 'Women artists in 19C', 10.0, 'ongoing', '2021-12-23', '2024-11-11');
+VALUES (1000, 'Women artists in 19C', 1000, 'ongoing', '2021-12-23', '2024-11-11');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
 VALUES (1001, 'Asian Contemporary Art', 20.5, 'completed', '2020-02-01', '2022-04-03');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
@@ -241,15 +243,15 @@ INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (3, 'Alic
 INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (4, 'Bob Williams', 1000, '111-222-3333');
 INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (5, 'Eva Brown', 200, '777-888-9999');
 
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (1, 1000, 500.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (2, 1001, 750.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (3, 1002, 300.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (4, 1003, 1000.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (5, 1004, 200.00);
-
 INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (1, 'John Smith', '123-456-7890');
 INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (2, 'Alice Johnson', '987-654-3210');
 INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (3, 'Bob Davis', '555-111-2222');
+
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (1, 1000, 500);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (2, 1001, 750);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (3, 1002, 300);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (4, 1003, 1000);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (5, 1004, 200);
 
 INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (1, 100, 'Venue A', '15/05/23', 150, 'Art Show A', 201);
 INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (2, 200, 'Venue B', '20/06/23', 250, 'Concert B', 202);
