@@ -170,8 +170,8 @@ public class TerminalTransactions {
 
         // append logical operator
         switch (logicalOperator) {
-            case 1 -> whereClause.append(" AND ");
-            case 2 -> whereClause.append(" OR ");
+            case 1: whereClause.append(" AND ");
+            case 2: whereClause.append(" OR ");
         }
     }
 
@@ -187,11 +187,11 @@ public class TerminalTransactions {
 
         // append arithmetic operator
         switch (arithmeticOperator) {
-            case 1 -> whereClause.append("= ");
-            case 2 -> whereClause.append("<> ");
-            case 3 -> whereClause.append("< ");
-            case 4 -> whereClause.append("> ");
-            case 5 -> whereClause.append("LIKE ");
+            case 1: whereClause.append("= ");
+            case 2: whereClause.append("<> ");
+            case 3: whereClause.append("< ");
+            case 4: whereClause.append("> ");
+            case 5: whereClause.append("LIKE ");
         }
     }
 
@@ -208,12 +208,12 @@ public class TerminalTransactions {
 
         // append attribute
         switch (category) {
-            case 1 -> whereClause.append("projectID ");
-            case 2 -> whereClause.append("title ");
-            case 3 -> whereClause.append("budget ");
-            case 4 -> whereClause.append("status ");
-            case 5 -> whereClause.append("startDate ");
-            case 6 -> whereClause.append("endDate: ");
+            case 1: whereClause.append("projectID ");
+            case 2: whereClause.append("title ");
+            case 3: whereClause.append("budget ");
+            case 4: whereClause.append("status ");
+            case 5: whereClause.append("startDate ");
+            case 6: whereClause.append("endDate: ");
         }
     }
 

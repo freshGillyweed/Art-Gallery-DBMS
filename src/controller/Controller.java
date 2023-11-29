@@ -164,7 +164,7 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
     }
 
     public void databaseSetup() {
-        dbHandler.databaseSetup();;
+        dbHandler.databaseSetup();
 
     }
 
