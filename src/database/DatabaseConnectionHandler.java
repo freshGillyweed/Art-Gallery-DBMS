@@ -87,7 +87,6 @@ public class DatabaseConnectionHandler {
         }
     }
 
-
     private void insertEvent(EventModel event) {
         // CITE SAMPLE PROJECT
         try {
