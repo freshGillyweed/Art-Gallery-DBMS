@@ -86,40 +86,6 @@ public class DatabaseConnectionHandler {
             throw new RuntimeException("Error running script.  Cause: " + e, e);
         }
     }
-
-    private static void populateEmployees() {
-        EmployeeModel employee1 = new EmployeeModel(2000, "111-222-333", "John Smith");
-        insertEmployee(employee1);
-        EmployeeModel employee2 = new EmployeeModel(2001, "111-222-334", "Daniel Lee");
-        insertEmployee(employee2);
-        EmployeeModel employee3 = new EmployeeModel(2002, "111-222-335", "Mary Jane");
-        insertEmployee(employee3);
-        EmployeeModel employee4 = new EmployeeModel(2003, "111-222-336", "Jordan Johnson");
-        insertEmployee(employee4);
-        EmployeeModel employee5 = new EmployeeModel(2004, "111-222-337", "Sarah Jones");
-        insertEmployee(employee5);
-        EmployeeModel employee6 = new EmployeeModel(2005, "111-222-338", "Michael Kim");
-        insertEmployee(employee6);
-        EmployeeModel employee7 = new EmployeeModel(2006, "111-222-339", "Bianca Ng");
-        insertEmployee(employee7);
-        EmployeeModel employee8 = new EmployeeModel(2007, "111-222-340", "Emma Watson");
-        insertEmployee(employee8);
-        EmployeeModel employee9 = new EmployeeModel(2008, "111-222-341", "Emma Stone");
-        insertEmployee(employee9);
-        EmployeeModel employee10 = new EmployeeModel(2009, "111-222-342", "Margot Robbie");
-        insertEmployee(employee10);
-        EmployeeModel employee11 = new EmployeeModel(2010, "111-222-343", "Chris Hemsworth");
-        insertEmployee(employee11);
-        EmployeeModel employee12 = new EmployeeModel(2011, "111-222-344", "Chris Pratt");
-        insertEmployee(employee12);
-        EmployeeModel employee13 = new EmployeeModel(2012, "111-222-345", "Chris Pine");
-        insertEmployee(employee13);
-        EmployeeModel employee14 = new EmployeeModel(2013, "111-222-346", "Chris Brown");
-        insertEmployee(employee14);
-        EmployeeModel employee15 = new EmployeeModel(2014, "111-222-347", "Chris Paul");
-        insertEmployee(employee15);
-    }
-
     private void insertEvent(EventModel event) {
         // CITE SAMPLE PROJECT
         try {
@@ -144,9 +110,6 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
-
-        populateEmployees();
-
     }
 
     private void insertEmployee(EmployeeModel employee) {
