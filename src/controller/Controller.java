@@ -5,6 +5,7 @@ import delegates.LoginWindowDelegate;
 import delegates.TerminalTransactionsDelegate;
 import model.ProjectModel;
 import ui.LoginWindow;
+import ui.TerminalTransactions;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -54,7 +55,7 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
 
     public void showAverageBudgetOverStatus(int threshold) {
        double average = dbHandler.getAverageBudgetOverStatus(threshold);
-        System.out.println("Average Budget Over Status for Projects with budgets higher than " + threshold + ": " + average);
+        System.out.println("\nAverage Budget Over Status for Projects with budgets higher than " + threshold + ": " + average);
     }
 
     public void showProjectSelectionInfo(String whereClause, boolean isEmpty) {
@@ -62,6 +63,7 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
         ProjectModel[] models = dbHandler.getProjectSelectionInfo(whereClause, isEmpty);
 
         for (ProjectModel model : models) {
+            System.out.println("\n");
             System.out.println("Project ID: " + model.getProjectID());
             System.out.printf("Title: " + model.getTitle());
             System.out.println("Budget: " + model.getBudget());

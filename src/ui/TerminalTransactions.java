@@ -113,13 +113,14 @@ public class TerminalTransactions {
     }
 
     private void handleProjectSelectionOption() {
-            StringBuilder whereClause = null;
+            StringBuilder whereClause = new StringBuilder();
             boolean keepGoing = true;
             boolean isEmpty = false;
             int addFilter;
+            int moreFilters;
 
             while (keepGoing) {
-                System.out.println("Enter 1 to specify filters, 0 for no filters: ");
+                System.out.print("Enter 1 to specify filters, 0 for no filters: ");
                 addFilter = readInteger(false);
 
                 if (addFilter == 1) {
@@ -132,8 +133,8 @@ public class TerminalTransactions {
                         appendValue(whereClause);
 
                         // ask user whether to add more filters
-                        System.out.println("Enter 1 to add more filters, otherwise 2");
-                        int moreFilters = readInteger(false);
+                        System.out.print("\nEnter 1 to add more filters, otherwise 2");
+                        moreFilters = readInteger(false);
 
                         // get out of while loop
                         if (moreFilters == 2) {break;}
@@ -145,12 +146,14 @@ public class TerminalTransactions {
                 }
 
                 delegate.showProjectSelectionInfo(String.valueOf(whereClause), isEmpty);
+                keepGoing = false;
             }
     }
 
     private void appendValue(StringBuilder whereClause) {
         input = new Scanner(System.in);
         input.useDelimiter("\\n");
+        System.out.println("\n");
         System.out.print("Enter value: ");
         String value = input.next();
         input.nextLine();
@@ -167,8 +170,8 @@ public class TerminalTransactions {
 
         // append logical operator
         switch (logicalOperator) {
-            case 1 -> whereClause.append("AND ");
-            case 2 -> whereClause.append("OR ");
+            case 1 -> whereClause.append(" AND ");
+            case 2 -> whereClause.append(" OR ");
         }
     }
 
