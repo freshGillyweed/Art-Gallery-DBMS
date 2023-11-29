@@ -1,4 +1,6 @@
 package ui;
 
-public class NestedGroupByAggregation {
+import javax.swing.*;
+
+public class NestedGroupByAggregation extends JFrame {
 }
