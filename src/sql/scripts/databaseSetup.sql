@@ -89,7 +89,18 @@ CREATE TABLE Artist
   PRIMARY KEY (artistID),
   UNIQUE (name, dateOfBirth));
 
-
+CREATE TABLE Exhibition
+(exhibitionID INTEGER,
+ title VARCHAR(50),
+ startDate VARCHAR(50),
+ endDate VARCHAR(50),
+ visitorCount INTEGER,
+ location VARCHAR(50),
+ curatorID INTEGER,
+ rating INTEGER,
+ PRIMARY KEY (exhibitionID),
+ FOREIGN KEY (curatorID) REFERENCES Curator(employeeID),
+ UNIQUE (startDate, location));
 
 CREATE TABLE Artwork
 (artworkID INTEGER,
@@ -107,24 +118,11 @@ CREATE TABLE Artwork
  FOREIGN KEY (featureID) REFERENCES Exhibition(exhibitionID) ON DELETE SET NULL,
  UNIQUE (dateCreated, title, artistID));
 
-CREATE TABLE Exhibition
-(exhibitionID INTEGER,
- title VARCHAR(50),
- startDate VARCHAR(50),
- endDate VARCHAR(50),
- visitorCount INTEGER,
- location VARCHAR(50),
- curatorID INTEGER,
- rating INTEGER,
- PRIMARY KEY (exhibitionID),
- FOREIGN KEY (curatorID) REFERENCES Curator(employeeID),
- UNIQUE (startDate, location));
-
 
 CREATE TABLE Visitor (
                          visitorID INTEGER PRIMARY KEY,
                          name VARCHAR(50),
-                         phoneNum INTEGER,
+                         phoneNum VARCHAR(50),
                          UNIQUE (name, phoneNum)
 );
 
@@ -195,6 +193,13 @@ VALUES (2003, 'Naturalism');
 INSERT INTO Curator (employeeID, specialization)
 VALUES (2004, 'Renaissance');
 
+INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID)
+VALUES (101, 100, 'Venue A', '15/05/23', 150, 'Art Show A', 2001);
+INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID)
+VALUES (102, 200, 'Venue B', '20/06/23', 250, 'Concert B', 2002);
+INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID)
+VALUES (103, 50, 'Venue C', '10/07/23', 100, 'Exhibition C', 2003);
+
 INSERT INTO EventStaffSupervises (employeeID, department, eventID)
 VALUES
     (2005, 'Education', 101);
@@ -218,17 +223,6 @@ VALUES (2013, 'Market and Value');
 INSERT INTO Researcher (employeeID, researchInterest)
 VALUES (2014, 'Conservation');
 
-INSERT INTO worksOn (employeeID, projectID)
-VALUES (2010, 1000);
-INSERT INTO worksOn (employeeID, projectID)
-VALUES (2011, 1001);
-INSERT INTO worksOn (employeeID, projectID)
-VALUES (2012, 1002);
-INSERT INTO worksOn (employeeID, projectID)
-VALUES (2013, 1003);
-INSERT INTO worksOn (employeeID, projectID)
-VALUES (2014, 1004);
-
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
 VALUES (1000, 'Women artists in 19C', 10.0, 'ongoing', '2021-12-23', '2024-11-11');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
@@ -240,21 +234,32 @@ VALUES (1003, 'Digital Evolution in Conservation', 30.5, 'completed', '2022-05-0
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
 VALUES (1004, 'Cultural Heritage Preservation', 40.0, 'not started', '2026-01-01', '2029-04-04');
 
-INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (1, 'John Doe', 500, '123-456-7890');
-INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (2, 'Jane Smith', 750, '987-654-3210');
-INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (3, 'Alice Johnson', 300, '555-123-4567');
-INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (4, 'Bob Williams', 1000, '111-222-3333');
-INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (5, 'Eva Brown', 200, '777-888-9999');
+INSERT INTO worksOn (employeeID, projectID)
+VALUES (2010, 1000);
+INSERT INTO worksOn (employeeID, projectID)
+VALUES (2011, 1001);
+INSERT INTO worksOn (employeeID, projectID)
+VALUES (2012, 1002);
+INSERT INTO worksOn (employeeID, projectID)
+VALUES (2013, 1003);
+INSERT INTO worksOn (employeeID, projectID)
+VALUES (2014, 1004);
+
+INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (11, 'John Doe', 500, '123-456-7890');
+INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (12, 'Jane Smith', 750, '987-654-3210');
+INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (13, 'Alice Johnson', 300, '555-123-4567');
+INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (14, 'Bob Williams', 1000, '111-222-3333');
+INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (15, 'Eva Brown', 200, '777-888-9999');
 
 INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (1, 'John Smith', '123-456-7890');
 INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (2, 'Alice Johnson', '987-654-3210');
 INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (3, 'Bob Davis', '555-111-2222');
 
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (1, 1000, 500.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (2, 1001, 750.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (3, 1002, 300.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (4, 1003, 1000.00);
-INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (5, 1004, 200.00);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (11, 1000, 500.00);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (12, 1001, 750.00);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (13, 1002, 300.00);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (14, 1003, 1000.00);
+INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (15, 1004, 200.00);
 
 
 INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
@@ -268,6 +273,17 @@ VALUES (54, 'Vincent van Gogh', 'March 30, 1853', 'July 29, 1890', 92);
 INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
 VALUES (55, 'Gerhard Richter', 'February 9, 1932', NULL, 68);
 
+INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
+VALUES	(301, 'Emerging Echoes: New Artists Unveiled', '25/10/22', '9/8/23', 966178, 'room 15', 2000, 67);
+INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
+VALUES	(302, 'Urban Odyssey: Cityscape Creations', '15/7/15', '18/8/17', 67551092, 'Bianca Ballroom', 2004, 89);
+INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
+VALUES	(303, '3D Art Extravaganza', '18/2/18', '19/5/20', 11000000, 'Ferguson Garden', 2003, 99);
+INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
+VALUES	(304, 'Echoes of the Past: Historical Art Revival', '19/4/20', '20/7/25', 73827361, 'room 209', 2002, 78);
+INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
+VALUES	(305, 'Art for Environmental Change', '23/12/9', '15/6/17', 161657192, 'room 112', 2001, 92);
+
 INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
 VALUES	(91, 51, 'Green Coca-Cola Bottles', '82.8 in by 57.1 in', '1962', 78000000, 14, 302, 'painting');
 INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
@@ -280,31 +296,16 @@ INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, 
 VALUES(95, 54, 'The Potato Eaters', '82 x 114 cm', '1885', 54000000, 14, 304, 'painting');
 
 
-INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (1, 100, 'Venue A', '15/05/23', 150, 'Art Show A', 201);
-INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (2, 200, 'Venue B', '20/06/23', 250, 'Concert B', 202);
-INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (3, 50, 'Venue C', '10/07/23', 100, 'Exhibition C', 203);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (101,1);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (101,2);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (101,3);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (102,3);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (103,1);
 
-INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
-VALUES	(301, 'Emerging Echoes: New Artists Unveiled', '25/10/22', '9/8/23', 966178, 'room 15', 2000, 67);
-INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
-VALUES	(302, 'Urban Odyssey: Cityscape Creations', '15/7/15', '18/8/17', 67551092, 'Bianca Ballroom', 2004, 89);
-INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
-VALUES	(303, '3D Art Extravaganza', '18/2/18', '19/5/20', 11000000, 'Ferguson Garden', 2003, 99);
-INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
-VALUES	(304, 'Echoes of the Past: Historical Art Revival', '19/4/20', '20/7/25', 73827361, 'room 209', 2002, 78);
-INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
-VALUES	(305, 'Art for Environmental Change', '23/12/9', '15/6/17', 161657192, 'room 112', 2001, 92);
+INSERT INTO Host (eventID, artistID) VALUES (101, 51);
+INSERT INTO Host (eventID, artistID) VALUES (101, 52);
+INSERT INTO Host (eventID, artistID) VALUES (101, 53);
 
-INSERT INTO ParticipateIn (eventID, visitorID) VALUES (1,1);
-INSERT INTO ParticipateIn (eventID, visitorID) VALUES (1,2);
-INSERT INTO ParticipateIn (eventID, visitorID) VALUES (1,3);
-INSERT INTO ParticipateIn (eventID, visitorID) VALUES (2,3);
-INSERT INTO ParticipateIn (eventID, visitorID) VALUES (3,1);
-
-INSERT INTO Host (eventID, artistID) VALUES (1, 301);
-INSERT INTO Host (eventID, artistID) VALUES (1, 302);
-INSERT INTO Host (eventID, artistID) VALUES (1, 303);
-
-INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 101);
-INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 102);
-INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 103);
+INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 301);
+INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 302);
+INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 303);
