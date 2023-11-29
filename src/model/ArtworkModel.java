@@ -3,7 +3,7 @@ package model;
 public class ArtworkModel {
 
     private final int artworkID;
-    private final artistID;
+    private final int artistID;
     private final String title;
     private final String dimensions;
     private final String dateCreated;
@@ -12,8 +12,9 @@ public class ArtworkModel {
     private int featureID;
     private int value;
 
-    public ArtworkModel(int artworkID, String title, String dimensions,
+    public ArtworkModel(int artistID, int artworkID, String title, String dimensions,
                         String dateCreated, String displayMedium, int donorID, int featureID, int value) {
+        this.artistID = artistID;
         this.artworkID = artworkID;
         this.title = title;
         this.dimensions = dimensions;
@@ -26,6 +27,10 @@ public class ArtworkModel {
 
     public int getArtworkID() {
         return artworkID;
+    }
+
+    public int getArtistID() {
+        return artistID;
     }
 
     public String getTitle() {

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.io.Reader;
+import util.ScriptRunner;
 
 /**
  * This class handles all database related transactions
@@ -69,9 +70,9 @@ public class DatabaseConnectionHandler {
             throw new RuntimeException("Error opening databaseSetup.sql");
         }
 
-        util.ScriptRunner
+        // execute entire file at once using script runner
         try {
-            util.SccScriptRunner script = new ScriptRunner(connection, true, true);
+            ScriptRunner script = new ScriptRunner(connection, true, true);
             script.runScript(reader);
         } catch (Exception e) {
             throw new RuntimeException("Error running script.  Cause: " + e, e);

@@ -2,7 +2,7 @@ package model;
 
 public class ExhibitionModel {
 
-    private final exhibitionID;
+    private final int exhibitionID;
     private String title;
     private String startDate;
     private String endDate;
@@ -11,8 +11,9 @@ public class ExhibitionModel {
     private int curatorID;
     private int rating;
 
-    public ExhibitionModel(String title, String startDate,
+    public ExhibitionModel(int exhibitionID, String title, String startDate,
                            String endDate, int visitorCount, String location, int curatorID, int rating) {
+        this.exhibitionID = exhibitionID;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -20,6 +21,10 @@ public class ExhibitionModel {
         this.location = location;
         this.curatorID = curatorID;
         this.rating = rating;
+    }
+
+    public int getExhibitionID() {
+        return exhibitionID;
     }
 
     public String getTitle() {
