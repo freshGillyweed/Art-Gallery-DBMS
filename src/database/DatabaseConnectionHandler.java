@@ -1,12 +1,15 @@
 package database;
 
-import model.*;
+import model.EmployeeModel;
+import model.EventModel;
+import model.EventStaffModel;
+import model.ProjectModel;
 import util.PrintablePreparedStatement;
+import util.ScriptRunner;
 
+import java.io.Reader;
 import java.sql.*;
 import java.util.ArrayList;
-import java.io.Reader;
-import util.ScriptRunner;
 
 /**
  * This class handles all database related transactions
@@ -69,22 +72,26 @@ public class DatabaseConnectionHandler {
 
     // runs the database setup script
     public void databaseSetup() throws RuntimeException {
-        dropBranchTableIfExists();
         Reader reader = null;
 
+        // program MUST BE RAN in the parent of the project folder for the file to open
         try {
-            reader = new java.io.FileReader("/sql/scripts/databaseSetup.sql");
+            reader = new java.io.FileReader("project_m1p7e_t4v5i_z8v1d/src/sql/scripts/databaseSetup.sql");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Error opening databaseSetup.sql");
         }
 
         // execute entire file at once using script runner
         try {
-            ScriptRunner script = new ScriptRunner(connection, true, true);
+            ScriptRunner script = new ScriptRunner(connection, false, true);
             script.runScript(reader);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Error running script.  Cause: " + e, e);
         }
+
+        System.out.println("database has been reset to initial values!");
     }
 
     private void insertEvent(EventModel event) {
