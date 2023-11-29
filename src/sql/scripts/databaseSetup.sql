@@ -63,7 +63,7 @@ CREATE TABLE worksOn
  projectID INTEGER,
  PRIMARY KEY (employeeID, projectID),
  FOREIGN KEY (employeeID) REFERENCES Employees(employeeID),
- FOREIGN KEY (ProjectID) REFERENCES ProjectTitle(projectID));
+ FOREIGN KEY (ProjectID) REFERENCES Project(projectID));
 
 CREATE TABLE Donor
 (donorID INTEGER PRIMARY KEY,
@@ -125,12 +125,11 @@ CREATE TABLE Visitor (
                          visitorID INTEGER PRIMARY KEY,
                          name VARCHAR(50),
                          phoneNum INTEGER,
-                         eventID INTEGER,
-                         exhibitionID INTEGER,
                          UNIQUE (name, phoneNum),
                          FOREIGN KEY (eventID) REFERENCES Event(eventID),
                          FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID)
 );
+
 
 CREATE TABLE ParticipateIn (
                                eventID INTEGER,
@@ -249,6 +248,10 @@ INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (3, 'Alic
 INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (4, 'Bob Williams', 1000, '111-222-3333');
 INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (5, 'Eva Brown', 200, '777-888-9999');
 
+INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (1, 'John Smith', '123-456-7890');
+INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (2, 'Alice Johnson', '987-654-3210');
+INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (3, 'Bob Davis', '555-111-2222');
+
 INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (1, 1000, 500.00);
 INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (2, 1001, 750.00);
 INSERT INTO Funds (donorID, projectID, amountGiven) VALUES (3, 1002, 300.00);
@@ -288,3 +291,17 @@ INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, lo
 VALUES	(304, 'Echoes of the Past: Historical Art Revival', '19/4/20', '20/7/25', 73827361, 'room 209', 2002, 78);
 INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
 VALUES	(305, 'Art for Environmental Change', '23/12/9', '15/6/17', 161657192, 'room 112', 2001, 92);
+
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (1,1);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (1,2);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (1,3);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (2,3);
+INSERT INTO ParticipateIn (eventID, visitorID) VALUES (3,1);
+
+INSERT INTO Host (eventID, artistID) VALUES (1, 301);
+INSERT INTO Host (eventID, artistID) VALUES (1, 302);
+INSERT INTO Host (eventID, artistID) VALUES (1, 303);
+
+INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 101);
+INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 102);
+INSERT INTO Visit (visitorID, exhibitionID) VALUES (1, 103);
