@@ -86,7 +86,7 @@ public class DatabaseConnectionHandler {
             throw new RuntimeException("Error running script.  Cause: " + e, e);
         }
     }
-    
+
 
     private void insertEvent(EventModel event) {
         // CITE SAMPLE PROJECT
@@ -112,9 +112,6 @@ public class DatabaseConnectionHandler {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
-
-        populateEmployees();
-
     }
 
     private void insertEmployee(EmployeeModel employee) {
