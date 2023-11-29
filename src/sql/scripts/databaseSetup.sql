@@ -281,6 +281,11 @@ VALUES(94, 55, 'Two Candles (Zwei Kerzen)', '47 1/4 × 39 1/2 in.', '1982', 9000
 INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
 VALUES(95, 54, 'The Potato Eaters', '82 x 114 cm', '1885', 54000000, 14, 304, 'painting');
 
+
+INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (1, 100, 'Venue A', '15/05/23', 150, 'Art Show A', 201);
+INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (2, 200, 'Venue B', '20/06/23', 250, 'Concert B', 202);
+INSERT INTO Event (eventID, ticketsSold, location, eventDate, capacity, title, employeeID) VALUES (3, 50, 'Venue C', '10/07/23', 100, 'Exhibition C', 203);
+
 INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
 VALUES	(301, 'Emerging Echoes: New Artists Unveiled', '25/10/22', '9/8/23', 966178, 'room 15', 2000, 67);
 INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
