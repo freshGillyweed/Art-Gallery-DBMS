@@ -125,9 +125,7 @@ CREATE TABLE Visitor (
                          visitorID INTEGER PRIMARY KEY,
                          name VARCHAR(50),
                          phoneNum INTEGER,
-                         UNIQUE (name, phoneNum),
-                         FOREIGN KEY (eventID) REFERENCES Event(eventID),
-                         FOREIGN KEY (exhibitionID) REFERENCES Exhibition(exhibitionID)
+                         UNIQUE (name, phoneNum)
 );
 
 
