@@ -86,6 +86,7 @@ public class DatabaseConnectionHandler {
             throw new RuntimeException("Error running script.  Cause: " + e, e);
         }
     }
+
     private void insertEvent(EventModel event) {
         // CITE SAMPLE PROJECT
         try {
