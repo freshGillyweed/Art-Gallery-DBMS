@@ -49,7 +49,16 @@ public class MainWindow extends JFrame {
 
         panel.add(resetDatabaseButton);
 
-        //
+        // update arrtibute button
+
+        JButton updateButton = new JButton("Update an Artwork");
+
+        updateButton.addActionListener(e -> {
+            Update win = new Update(delegate);
+            win.showUpdateWindow();
+        });
+
+        panel.add(updateButton);
 
         add(panel);
         setVisible(true);
