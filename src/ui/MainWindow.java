@@ -30,6 +30,7 @@ public class MainWindow extends JFrame {
 
         // Create buttons and implement respective action listeners
         // i.e., create buttons that open new windows
+
         JButton projectBudgetButton = new JButton("Average Project Budget");
         projectBudgetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -39,7 +40,7 @@ public class MainWindow extends JFrame {
             }
         });
 
-        // Add buttons to panel
+        // average project budget button
         panel.add(projectBudgetButton);
 
         // reset database button
@@ -63,6 +64,19 @@ public class MainWindow extends JFrame {
         });
 
         panel.add(updateButton);
+
+        // selection button
+
+        JButton selectionButton = new JButton("Get Project Information");
+        selectionButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Selection window = new Selection(dbHandler);
+                window.showFrame();
+                //window.setVisible(true);
+            }
+        });
+
+        panel.add(selectionButton);
 
         add(panel);
         setVisible(true);

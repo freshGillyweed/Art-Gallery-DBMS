@@ -12,7 +12,6 @@ public class NestedGroupByAggregation extends JFrame {
     //private NestedGroupByAggregationDelegate delegate;
     private DatabaseConnectionHandler dbHandler;
     private static final int TEXT_FIELD_WIDTH = 10;
-    private static final int MAX_LOGIN_ATTEMPTS = 3;
 
     public NestedGroupByAggregation (DatabaseConnectionHandler dbHandler) {
         super("View Average Project Budget Over Status");
