@@ -10,5 +10,6 @@ public interface MainWindowDelegate {
     public String[] getArtworkTitles();
     public void update(String title, String attr, String newAttr) throws Exception;
     public String[] getAllLoyalVisitors() throws Exception;
+    public String[] getArtistsValue(String op, int Value) throws Exception;
     public void terminalTransactionsFinished();
 }
