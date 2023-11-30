@@ -1,20 +1,22 @@
 package ui;
 
+import database.DatabaseConnectionHandler;
 import delegates.MainWindowDelegate;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 public class MainWindow extends JFrame {
 
     private MainWindowDelegate delegate;
+    private DatabaseConnectionHandler dbHandler;
 
-    public MainWindow(MainWindowDelegate del) {
+    public MainWindow(MainWindowDelegate del, DatabaseConnectionHandler dbHandler) {
         super("Main Window");
         this.delegate = del;
+        this.dbHandler = dbHandler;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 200);
         setLocationRelativeTo(null);
@@ -30,8 +32,9 @@ public class MainWindow extends JFrame {
         JButton projectBudgetButton = new JButton("Average Project Budget");
         projectBudgetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                NestedGroupByAggregation window = new NestedGroupByAggregation();
-                window.setVisible(true);
+                NestedGroupByAggregation window = new NestedGroupByAggregation(dbHandler);
+                window.showFrame();
+                //window.setVisible(true);
             }
         });
 
@@ -49,7 +52,6 @@ public class MainWindow extends JFrame {
 
         panel.add(resetDatabaseButton);
 
-        //
 
         add(panel);
         setVisible(true);
