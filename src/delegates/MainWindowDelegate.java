@@ -7,5 +7,7 @@ public interface MainWindowDelegate {
     public void showProjectSelectionInfo(String whereClause, boolean isEmpty);
 
     public String[] getTables();
+    public String[] getArtworkTitles();
+    public void update(String title, String attr, String newAttr) throws Exception;
     public void terminalTransactionsFinished();
 }

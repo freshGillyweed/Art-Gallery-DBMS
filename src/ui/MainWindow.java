@@ -18,14 +18,15 @@ public class MainWindow extends JFrame {
         this.delegate = del;
         this.dbHandler = dbHandler;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 200);
+        setSize(500, 300);
         setLocationRelativeTo(null);
     }
 
     public void showFrame() {
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout());
+        GridLayout mainLayout = new GridLayout(5, 2, 5, 10);
+        panel.setLayout(mainLayout);
 
         // Create buttons and implement respective action listeners
         // i.e., create buttons that open new windows
@@ -52,6 +53,16 @@ public class MainWindow extends JFrame {
 
         panel.add(resetDatabaseButton);
 
+        // update arrtibute button
+
+        JButton updateButton = new JButton("Update an Artwork");
+
+        updateButton.addActionListener(e -> {
+            Update win = new Update(delegate);
+            win.showUpdateWindow();
+        });
+
+        panel.add(updateButton);
 
         add(panel);
         setVisible(true);

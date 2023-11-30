@@ -4,8 +4,10 @@ import database.DatabaseConnectionHandler;
 import delegates.*;
 import model.ProjectModel;
 import ui.*;
+import util.PrintablePreparedStatement;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -152,6 +154,51 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
             e.printStackTrace();
         }
     }
+
+    // MADE FOR UPDATE BOX
+    // =======================================================================
+    // made for update window, grabs every title of artwork in the database
+    public String[] getArtworkTitles() {
+        String query = "SELECT title FROM Artwork";
+        PrintablePreparedStatement ps;
+        ResultSet res;
+        ArrayList<String> out = new ArrayList<String>();
+        try {
+             ps = new PrintablePreparedStatement(
+                    dbHandler.getConnection().prepareStatement(query), query, true);
+             ps.execute();
+             res = ps.getResultSet();
+            while (res.next()) {
+                out.add(res.getString(1));
+            }
+        }   catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new String[] {"Error getting artwork titles"};
+        }
+
+        String[] arr = new String[out.size()];
+        arr = out.toArray(arr);
+        return arr;
+    }
+
+    public void update(String title, String attr, String newAttr) throws Exception {
+        System.out.println(title);
+        System.out.println(attr);
+        System.out.println(newAttr);
+        String query = "UPDATE artwork SET " + attr + " = '" + newAttr + "' WHERE title = '" + title + "'";
+        try {
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(
+                    dbHandler.getConnection().prepareStatement(query), query, true);
+            ps.execute();
+        }   catch (Exception e) {
+            System.out.println(e.getMessage());
+            Exception p = new Exception("error");
+            throw p;
+        }
+    }
+
+    // =======================================================================
+
 
     public void terminalTransactionsFinished() {
         dbHandler.close();
