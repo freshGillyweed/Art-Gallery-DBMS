@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MainWindow extends JFrame {
 
@@ -54,7 +56,7 @@ public class MainWindow extends JFrame {
 
         panel.add(resetDatabaseButton);
 
-        // update arrtibute button
+        // update attribute button
 
         JButton updateButton = new JButton("Update an Artwork");
 
@@ -64,6 +66,17 @@ public class MainWindow extends JFrame {
         });
 
         panel.add(updateButton);
+
+        // division
+
+        JButton DivisionButton = new JButton("see every loyal customer");
+
+        DivisionButton.addActionListener(e -> {
+            Division juh = new Division(delegate);
+            juh.showframe();
+        });
+
+        panel.add(DivisionButton);
 
         // selection button
 
@@ -75,6 +88,7 @@ public class MainWindow extends JFrame {
                 //window.setVisible(true);
             }
         });
+
 
         panel.add(selectionButton);
 

@@ -198,6 +198,31 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
     }
 
     // =======================================================================
+    // methods for division:
+
+    // find every visitor who visited every exhibit
+    public String[] getAllLoyalVisitors() throws Exception {
+        ResultSet res;
+        ArrayList<String> out = new ArrayList<String>();
+        String query = "SELECT name FROM visitor V WHERE NOT EXISTS (" +
+                "SELECT exhibitionID FROM Exhibition E WHERE NOT EXISTS (" +
+                "SELECT visitorID FROM Visit I WHERE E.exhibitionID = I.exhibitionID AND V.visitorID = I.visitorID))";
+        try {
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(
+                    dbHandler.getConnection().prepareStatement(query), query, true);
+            ps.execute();
+            res = ps.getResultSet();
+            while (res.next()) {
+                out.add(res.getString(1));
+            }
+        }   catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception("error");
+        }
+        String[] arr = new String[out.size()];
+        arr = out.toArray(arr);
+        return arr;
+    }
 
 
     public void terminalTransactionsFinished() {
@@ -224,7 +249,7 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
 
         // uncomment this and comment controller.start() to skip to bypass login screen
         // this will cause the connection to the database to not be initialized (only use for making the gui)
-        //mainWindow.showFrame(controller);
+        //mainWindow.showFrame();
 
         controller.start();
     }

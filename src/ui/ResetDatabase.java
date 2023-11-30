@@ -11,7 +11,7 @@ public class ResetDatabase extends JFrame {
 
     public ResetDatabase() {
         super("Select an option and hit submit");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(200, 150);
         setLocationRelativeTo(null);
     }
