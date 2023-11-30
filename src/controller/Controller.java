@@ -39,7 +39,7 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
             // Once connected, remove login window and start text transaction flow
             loginWindow.dispose();
 
-            MainWindow mainWindow = new MainWindow(this);
+            MainWindow mainWindow = new MainWindow(this, dbHandler);
             mainWindow.showFrame(); // show the main menu (should run until program is halted)
         } else {
             loginWindow.handleLoginFailed();
@@ -54,7 +54,7 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
 
     public void showAverageBudgetOverStatus(int threshold) {
        double average = dbHandler.getAverageBudgetOverStatus(threshold);
-        System.out.println("\nAverage Budget Over Status for Projects with budgets higher than " + threshold + ": " + average);
+       System.out.println("\nAverage Budget Over Status for Projects with budgets higher than " + threshold + ": " + average);
     }
 
     public void showProjectSelectionInfo(String whereClause, boolean isEmpty) {
@@ -220,7 +220,7 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
     public static void main(String[] args) {
         Controller controller = new Controller();
 
-        MainWindow mainWindow = new MainWindow(controller);
+        MainWindow mainWindow = new MainWindow(controller, controller.dbHandler);
 
         // uncomment this and comment controller.start() to skip to bypass login screen
         // this will cause the connection to the database to not be initialized (only use for making the gui)

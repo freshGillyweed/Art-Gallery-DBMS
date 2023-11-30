@@ -3,12 +3,12 @@ package model;
 public class ProjectModel {
     private int projectID;
     private String title;
-    private double budget;
+    private int budget;
     private String status;
     private String startDate;
     private String endDate;
 
-    public ProjectModel(int projectID, String title, double budget, String status, String startDate, String endDate) {
+    public ProjectModel(int projectID, String title, int budget, String status, String startDate, String endDate) {
         this.projectID = projectID;
         this.title = title;
         this.budget = budget;
@@ -22,7 +22,7 @@ public class ProjectModel {
     public String getTitle() {
         return title;
     }
-    public double getBudget() {
+    public int getBudget() {
         return budget;
     }
     public String getStatus() {
