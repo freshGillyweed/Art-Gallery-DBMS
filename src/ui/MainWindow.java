@@ -78,6 +78,17 @@ public class MainWindow extends JFrame {
 
         panel.add(DivisionButton);
 
+        // JOIN
+
+        JButton joinButton = new JButton("search the value of artists");
+
+        joinButton.addActionListener(e -> {
+            Join yuh = new Join(delegate);
+            yuh.showFrame();
+        });
+
+        panel.add(joinButton);
+
         // selection button
 
         JButton selectionButton = new JButton("Get Project Information");

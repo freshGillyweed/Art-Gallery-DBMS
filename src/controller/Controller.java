@@ -224,6 +224,31 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
         return arr;
     }
 
+    // ====================================================================
+    // methods for join:
+
+    public String[] getArtistsValue(String op, int Value) throws Exception {
+        ResultSet res;
+        ArrayList<String> out = new ArrayList<String>();
+        String query = "SELECT UNIQUE name FROM Artist INNER JOIN " +
+                "Artwork ON Artist.ArtistID = Artwork.artistID WHERE Artwork.value " + op + " " + Value;
+        try {
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(
+                    dbHandler.getConnection().prepareStatement(query), query, true);
+            ps.execute();
+            res = ps.getResultSet();
+            while (res.next()) {
+                out.add(res.getString(1));
+            }
+        }   catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception("error");
+        }
+        String[] arr = new String[out.size()];
+        arr = out.toArray(arr);
+        return arr;
+    }
+
 
     public void terminalTransactionsFinished() {
         dbHandler.close();
