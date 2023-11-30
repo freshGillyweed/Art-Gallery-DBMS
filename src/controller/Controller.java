@@ -155,6 +155,8 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
         }
     }
 
+    // MADE FOR UPDATE BOX
+    // =======================================================================
     // made for update window, grabs every title of artwork in the database
     public String[] getArtworkTitles() {
         String query = "SELECT title FROM Artwork";
@@ -193,8 +195,10 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
             Exception p = new Exception("error");
             throw p;
         }
-
     }
+
+    // =======================================================================
+
 
     public void terminalTransactionsFinished() {
         dbHandler.close();
