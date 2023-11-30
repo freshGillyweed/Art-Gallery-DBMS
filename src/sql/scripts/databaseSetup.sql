@@ -53,7 +53,7 @@ CREATE TABLE Researcher
 CREATE TABLE Project
 (projectID INTEGER PRIMARY KEY,
  title VARCHAR(50),
- budget DECIMAL,
+ budget INTEGER,
  status VARCHAR(50),
  startDate VARCHAR(50),
  endDate VARCHAR(50));
@@ -224,15 +224,15 @@ INSERT INTO Researcher (employeeID, researchInterest)
 VALUES (2014, 'Conservation');
 
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1000, 'Women artists in 19C', 10.0, 'ongoing', '2021-12-23', '2024-11-11');
+VALUES (1000, 'Women artists in 19C', 100, 'ongoing', '2021-12-23', '2024-11-11');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1001, 'Asian Contemporary Art', 20.5, 'completed', '2020-02-01', '2022-04-03');
+VALUES (1001, 'Asian Contemporary Art', 200, 'completed', '2020-02-01', '2022-04-03');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1002, 'Evolution of Printmaking Techniques', 30.0, 'not started', '2024-06-20', '2026-11-03');
+VALUES (1002, 'Evolution of Printmaking Techniques', 300, 'not started', '2024-06-20', '2026-11-03');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1003, 'Digital Evolution in Conservation', 30.5, 'completed', '2022-05-04', '2023-02-02');
+VALUES (1003, 'Digital Evolution in Conservation', 300, 'completed', '2022-05-04', '2023-02-02');
 INSERT INTO Project (projectID, title, budget, status, startDate, endDate)
-VALUES (1004, 'Cultural Heritage Preservation', 40.0, 'not started', '2026-01-01', '2029-04-04');
+VALUES (1004, 'Cultural Heritage Preservation', 400, 'not started', '2026-01-01', '2029-04-04');
 
 INSERT INTO worksOn (employeeID, projectID)
 VALUES (2010, 1000);
