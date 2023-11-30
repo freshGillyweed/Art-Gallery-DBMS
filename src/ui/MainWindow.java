@@ -1,8 +1,6 @@
 package ui;
 
 import delegates.MainWindowDelegate;
-import delegates.TerminalTransactionsDelegate;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,15 +12,15 @@ public class MainWindow extends JFrame {
 
     private MainWindowDelegate delegate;
 
-    public MainWindow() {
+    public MainWindow(MainWindowDelegate del) {
         super("Main Window");
+        this.delegate = del;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 200);
         setLocationRelativeTo(null);
     }
 
-    public void showFrame(MainWindowDelegate del) {
-        this.delegate = del;
+    public void showFrame() {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout());

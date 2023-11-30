@@ -6,5 +6,6 @@ public interface MainWindowDelegate {
     public void showAverageBudgetOverStatus(int threshold);
     public void showProjectSelectionInfo(String whereClause, boolean isEmpty);
 
+    public String[] getTables();
     public void terminalTransactionsFinished();
 }

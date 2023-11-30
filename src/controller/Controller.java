@@ -37,8 +37,8 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
             // Once connected, remove login window and start text transaction flow
             loginWindow.dispose();
 
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.showFrame(this); // show the main menu (should run until program is halted)
+            MainWindow mainWindow = new MainWindow(this);
+            mainWindow.showFrame(); // show the main menu (should run until program is halted)
         } else {
             loginWindow.handleLoginFailed();
 
@@ -164,9 +164,16 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
         dbHandler.databaseSetup();
     }
 
+    public String[] getTables() {
+        // TODO: make this dynamic
+        return new String[]{"Artist", "Artwork", "Curator", "Donor", "Employee", "Event", "EventStaff",
+                "Exhibition", "Host", "Participate in", "Project", "Researcher", "Visit", "Visitor"};
+    }
+
     public static void main(String[] args) {
-        MainWindow mainWindow = new MainWindow();
         Controller controller = new Controller();
+
+        MainWindow mainWindow = new MainWindow(controller);
 
         // uncomment this and comment controller.start() to skip to bypass login screen
         // this will cause the connection to the database to not be initialized (only use for making the gui)
