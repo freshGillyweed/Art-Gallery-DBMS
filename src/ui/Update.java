@@ -3,12 +3,15 @@ package ui;
 import delegates.MainWindowDelegate;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 public class Update extends JFrame {
     MainWindowDelegate delegate;
     Update(MainWindowDelegate del) {
         super("Update an artwork");
         delegate = del;
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(300, 400);
         setLocationRelativeTo(null);
     }
@@ -45,6 +48,7 @@ public class Update extends JFrame {
             }
         });
 
+
         panel.add(prompt);
         panel.add(artworks);
         panel.add(prompt1);
@@ -54,6 +58,8 @@ public class Update extends JFrame {
         panel.add(submit);
 
         add(panel);
+
+
         setVisible(true);
     }
 }
