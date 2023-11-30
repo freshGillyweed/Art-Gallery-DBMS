@@ -1,11 +1,9 @@
 package controller;
 
 import database.DatabaseConnectionHandler;
-import delegates.LoginWindowDelegate;
-import delegates.TerminalTransactionsDelegate;
+import delegates.*;
 import model.ProjectModel;
-import ui.LoginWindow;
-import ui.TerminalTransactions;
+import ui.*;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -14,7 +12,7 @@ import java.util.Scanner;
  * This is the main controller class that will orchestrate everything.
  * This is based off the Sample Java Project (Bank.java)
  */
-public class Controller implements LoginWindowDelegate, TerminalTransactionsDelegate {
+public class Controller implements LoginWindowDelegate, MainWindowDelegate {
     private DatabaseConnectionHandler dbHandler = null;
     private LoginWindow loginWindow = null;
 
@@ -39,9 +37,8 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
             // Once connected, remove login window and start text transaction flow
             loginWindow.dispose();
 
-            TerminalTransactions transaction = new TerminalTransactions();
-            transaction.setupDatabase(this);
-            transaction.showMainMenu(this);
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.showFrame(this); // show the main menu (should run until program is halted)
         } else {
             loginWindow.handleLoginFailed();
 
@@ -165,11 +162,16 @@ public class Controller implements LoginWindowDelegate, TerminalTransactionsDele
 
     public void databaseSetup() {
         dbHandler.databaseSetup();
-
     }
 
     public static void main(String[] args) {
+        MainWindow mainWindow = new MainWindow();
         Controller controller = new Controller();
+
+        // uncomment this and comment controller.start() to skip to bypass login screen
+        // this will cause the connection to the database to not be initialized (only use for making the gui)
+        //mainWindow.showFrame(controller);
+
         controller.start();
     }
 }
