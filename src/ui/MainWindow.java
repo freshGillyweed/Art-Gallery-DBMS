@@ -89,6 +89,18 @@ public class MainWindow extends JFrame {
 
         panel.add(joinButton);
 
+        // HAVING AGGREGATION
+
+        JButton havingButton = new JButton("get countries by donations");
+
+        havingButton.addActionListener(e -> {
+            HavingAggregation ok = new HavingAggregation(delegate);
+            ok.showFrame();
+        });
+
+
+        panel.add(havingButton);
+
         // selection button
 
         JButton selectionButton = new JButton("Get Project Information");

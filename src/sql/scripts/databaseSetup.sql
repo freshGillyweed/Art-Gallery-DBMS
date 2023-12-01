@@ -69,7 +69,8 @@ CREATE TABLE Donor
 (donorID INTEGER PRIMARY KEY,
  name VARCHAR(50),
  totalDonationValue INTEGER,
- phoneNum VARCHAR(50));
+ phoneNum VARCHAR(50),
+ country VARCHAR(50));
 
 
 CREATE TABLE Funds
@@ -245,11 +246,26 @@ VALUES (2013, 1003);
 INSERT INTO worksOn (employeeID, projectID)
 VALUES (2014, 1004);
 
-INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (11, 'John Doe', 500, '123-456-7890');
-INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (12, 'Jane Smith', 750, '987-654-3210');
-INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (13, 'Alice Johnson', 300, '555-123-4567');
-INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (14, 'Bob Williams', 1000, '111-222-3333');
-INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum) VALUES (15, 'Eva Brown', 200, '777-888-9999');
+INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum, country)
+VALUES (11, 'John Doe', 500, '123-456-7890', 'Canada');
+INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum, country)
+VALUES (12, 'Jane Smith', 750, '987-654-3210', 'Canada');
+INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum, country)
+VALUES (13, 'Alice Johnson', 300, '555-123-4567', 'USA');
+INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum, country)
+VALUES (14, 'Bob Williams', 1000, '111-222-3333', 'Canada');
+INSERT INTO Donor (donorID, name, totalDonationValue, phoneNum, country)
+VALUES (15, 'Eva Brown', 200, '777-888-9999', 'USA');
+INSERT INTO Donor (donorID, TotalDonationValue, phoneNum, name, country)
+VALUES (16, 64000000, '473-928-7782', 'Billy Bob', 'USA');
+INSERT INTO Donor (donorID, TotalDonationValue, phoneNum, name, country)
+VALUES (17, 109000000, '110-273-6271', 'Jim Jones', 'Mexico');
+INSERT INTO Donor (donorID, TotalDonationValue, phoneNum, name, country)
+VALUES (18, 1112000, '182-999-9085', 'Harry Dewit', 'Canada');
+INSERT INTO Donor (donorID, TotalDonationValue, phoneNum, name, country)
+VALUES (19, 810200000, '111-521-1829', 'Gustavo Fring', 'USA');
+INSERT INTO Donor (donorID, TotalDonationValue, phoneNum, name, country)
+VALUES (20, 7718000, '902-892-7782', 'Jonas Cruz', 'Mexico');
 
 INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (1, 'John Smith', '123-456-7890');
 INSERT INTO Visitor (visitorID, name, phoneNum) VALUES (2, 'Alice Johnson', '987-654-3210');

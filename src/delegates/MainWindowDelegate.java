@@ -11,5 +11,6 @@ public interface MainWindowDelegate {
     public void update(String title, String attr, String newAttr) throws Exception;
     public String[] getAllLoyalVisitors() throws Exception;
     public String[] getArtistsValue(String op, int Value) throws Exception;
+    public String[] getDonorsValue(String op, int value) throws Exception;
     public void terminalTransactionsFinished();
 }
