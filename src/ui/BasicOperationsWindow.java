@@ -34,35 +34,58 @@ public class BasicOperationsWindow extends JFrame {
 
     public void showFrame() {
         JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setSize(300,300);
+
         eventTableModel = new DefaultTableModel();
         eventTable = new JTable(eventTableModel);
-        JScrollPane eventScrollPane = new JScrollPane(eventTable);
-        tabbedPane.addTab("Event", eventScrollPane);
-        updateTable("Event", eventTableModel, eventTable);
 
         artistTableModel = new DefaultTableModel();
         artistTable = new JTable(artistTableModel);
-        JScrollPane artistScrollPane = new JScrollPane(artistTable);
-        tabbedPane.addTab("Artist", artistScrollPane);
 
-        add(tabbedPane, BorderLayout.CENTER);
+        JPanel eventPanel = new JPanel();
+        JPanel artistPanel = new JPanel();
+
+        tabbedPane.addTab("Event", eventPanel);
+        tabbedPane.addTab("Artist", artistPanel);
+
+        JScrollPane eventScrollPane = new JScrollPane(eventTable);
+        JScrollPane artistScrollPane = new JScrollPane(artistTable);
+
+        updateTable("Event", eventTableModel, eventTable);
+        updateTable("Artist", artistTableModel, artistTable);
 
         // adds buttons
-        JPanel buttonsPanel = new JPanel();
-        add(buttonsPanel, BorderLayout.SOUTH);
+        JPanel eventButtonsPanel = new JPanel();
+        JPanel artistButtonsPanel = new JPanel();
 
         // INSERT BUTTONS
         JButton insertEventButton = new JButton("Insert Event");
         insertEventButton.addActionListener(new InsertEventAction());
-        buttonsPanel.add(insertEventButton);
 
-        // TODO: ADD ARTIST ACTION if enough time???
-        // JButton insertArtistButton = new JButton("Insert Artist");
-        //
-       //  buttonsPanel.add(insertArtistButton);
+        JButton deleteEventButton = new JButton("Delete Event");
+        deleteEventButton.addActionListener(new DeleteAction("Event", eventTable, eventTableModel));
+
+        JButton insertArtistButton = new JButton("Insert Artist");
+        JButton deleteArtistButton = new JButton("Delete Artist");
+        deleteArtistButton.addActionListener(new DeleteAction("Artist", artistTable, artistTableModel));
 
 
-        // TODO: ADD DELETE BUTTONS (ARTIST, maybe event and artwork)
+        eventPanel.setLayout(new BoxLayout(eventPanel, BoxLayout.PAGE_AXIS ));
+        artistPanel.setLayout(new BoxLayout(artistPanel, BoxLayout.PAGE_AXIS ));
+
+        eventButtonsPanel.add(insertEventButton);
+        eventButtonsPanel.add(deleteEventButton);
+        artistButtonsPanel.add(insertArtistButton);
+        artistButtonsPanel.add(deleteArtistButton);
+
+        eventPanel.add(eventButtonsPanel);
+        artistPanel.add(artistButtonsPanel);
+
+        eventPanel.add(eventScrollPane);
+        artistPanel.add(artistScrollPane);
+
+        add(tabbedPane, BorderLayout.CENTER);
+
         // display everything
         setVisible(true);
     }
@@ -208,7 +231,40 @@ public class BasicOperationsWindow extends JFrame {
         }
 
     }
+    private class DeleteAction extends AbstractAction {
+        private DefaultTableModel model;
+        private JTable table;
+        private String name;
+        DeleteAction(String name, JTable table, DefaultTableModel model) {
+            super("Delete " + name);
+            this.model = model;
+            this.table = table;
+            this.name = name;
+        }
 
+        public void actionPerformed(ActionEvent e) {
+            int id = Integer.parseInt(JOptionPane.showInputDialog(
+                    BasicOperationsWindow.this,
+                    "Please enter the id of the row you want to delete:"));
+            if (name.equals("Event")) {
+                try {
+                    dbHandler.deleteEvent(id);
+                } catch (SQLException ex) {
+                    handleSQLException(ex);
+                }
+            } else if (name.equals("Artist")) {
+                try {
+                    dbHandler.deleteArtist(id);
+                } catch (SQLException ex) {
+                    handleSQLException(ex);
+                }
+            }
+
+            JOptionPane.showMessageDialog(BasicOperationsWindow.this,
+                    "Deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            updateTable(name, model, table);
+        }
+    }
     // this is for the inputting of new events , provides a user-friendly window with text fields
     private class EventInputDialog extends JDialog {
 
