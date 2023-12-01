@@ -209,26 +209,74 @@ public class DatabaseConnectionHandler {
         return connection;
     }
 
-    public EventModel[] getAverageTicketsSoldPerEvent() throws SQLException {
-        String query = """
-                SELECT title, AVG(ticketsSold) as average_tickets_sold
-                FROM Event
-                GROUP BY title;""";
-        PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
-        ResultSet rs = ps.executeQuery();
-        ArrayList<EventModel> rows = new ArrayList<>();
-        while(rs.next()){
-           EventModel model = new EventModel(
-                   rs.getInt("ticketsSold"),
-                   rs.getString("location"),
-                   rs.getString("date"),
-                   rs.getInt("capacity"),
-                   rs.getInt("eventID"),
-                   rs.getString("title")
-           );
-           rows.add(model);
+    public ResultSet getArtworkValueSummary(String option) throws SQLException {
+        String query = "";
+        switch (option) {
+            case "average":
+                query = "SELECT DONORID, AVG(VALUE) as average_value " +
+                        "FROM ARTWORK " +
+                        "GROUP BY DONORID";
+                break;
+            case "minimum":
+                query = "SELECT DONORID, MIN(VALUE) as min_value " +
+                        "FROM ARTWORK " +
+                        "GROUP BY DONORID";
+                break;
+            case "maximum":
+                query = "SELECT DONORID, MAX(VALUE) as max_value " +
+                        "FROM ARTWORK " +
+                        "GROUP BY DONORID";
+                break;
+            case "count":
+                query = "SELECT DONORID,COUNT(VALUE) as count_value " +
+                        "FROM ARTWORK " +
+                        "GROUP BY DONORID";
+                break;
         }
-        return rows.toArray(new EventModel[rows.size()]);
+
+        PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+        return ps.executeQuery();
+    }
+    public ResultSet getAverageTicketsSoldPerEvent(String option) throws SQLException {
+        String query = "";
+        switch (option) {
+            case "average":
+                query = "SELECT title, AVG(ticketsSold) as average_tickets_sold " +
+                        "FROM Event " +
+                        "GROUP BY title";
+                break;
+            case "minimum":
+                query = "SELECT title, MIN(ticketsSold) as min_tickets_sold " +
+                        "FROM Event " +
+                        "GROUP BY title";
+                break;
+            case "maximum":
+                query = "SELECT title, MAX(ticketsSold) as max_tickets_sold " +
+                        "FROM Event " +
+                        "GROUP BY title";
+                break;
+            case "count":
+                query = "SELECT title, COUNT(ticketsSold) as count_tickets_sold " +
+                        "FROM Event " +
+                        "GROUP BY title";
+                break;
+        }
+
+        PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+        return ps.executeQuery();
+//        ArrayList<EventModel> rows = new ArrayList<>();
+//        while(rs.next()){
+//           EventModel model = new EventModel(
+//                   rs.getInt("ticketsSold"),
+//                   rs.getString("location"),
+//                   rs.getString("date"),
+//                   rs.getInt("capacity"),
+//                   rs.getInt("eventID"),
+//                   rs.getString("title")
+//           );
+//           rows.add(model);
+//        }
+//        return rows.toArray(new EventModel[rows.size()]);
     }
     public double getAverageBudgetOverStatus(int threshold) {
         //ProjectModel result = null;
