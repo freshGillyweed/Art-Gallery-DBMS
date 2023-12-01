@@ -61,7 +61,7 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    private void rollbackConnection() {
+    public void rollbackConnection() {
         try  {
             connection.rollback();
         } catch (SQLException e) {
@@ -93,7 +93,7 @@ public class DatabaseConnectionHandler {
         System.out.println("database has been reset to initial values!");
     }
 
-    private void insertEvent(EventModel event) throws SQLException{
+    public void insertEvent(EventModel event) throws SQLException{
         // CITE SAMPLE PROJECT
        // try {
             String query = "INSERT INTO EVENT VALUES (?,?,?,?,?,?,?)";
@@ -164,29 +164,6 @@ public class DatabaseConnectionHandler {
 //        } catch (SQLException e) {
 //            handleSQLException(e);
 //        }
-    }
-    private void handleSQLException(SQLException e) {
-        // potentially throw another exception for the GUI to handle
-        switch (e.getErrorCode()) {
-            case 1400 -> {
-                // insert null
-                // specify which value?
-                System.out.println("Error: Attempt to insert or update NULL into a NOT NULL column.");
-                rollbackConnection();
-            }
-            case 2291 -> {
-                System.out.println("Error: Attempt to insert a foreign key value that does not exist in the referenced table.");
-                rollbackConnection();
-            }
-            case 1 -> {
-                System.out.println("Error: Attempt to insert a non-unique value into a column with a unique constraint.");
-                rollbackConnection();
-            }
-            default -> {
-                System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-                rollbackConnection();
-            }
-        }
     }
 
     public void deleteArtist(int artistID) throws SQLException {

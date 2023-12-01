@@ -31,6 +31,17 @@ public class MainWindow extends JFrame {
         // Create buttons and implement respective action listeners
         // i.e., create buttons that open new windows
 
+        JButton generalMenuButton = new JButton("General Menu");
+        generalMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BasicOperationsWindow window = new BasicOperationsWindow(delegate, dbHandler);
+                window.showFrame();
+            }
+        });
+
+        panel.add(generalMenuButton);
+
         JButton projectBudgetButton = new JButton("Average Project Budget");
         projectBudgetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
