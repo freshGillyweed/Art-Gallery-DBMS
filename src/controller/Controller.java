@@ -82,7 +82,7 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
             
             ResultSet resultSet = connection.createStatement().executeQuery("SELECT USER FROM DUAL");//
             resultSet.next();//
-            String currentUser = resultSet.getString(1);//
+            String currentUser = resultSet.getString(1);
             
             ResultSet tables = metaData.getTables(null, currentUser, "%", new String[]{"TABLE"});
             //ResultSet tables = metaData.getTables(null, null, "%", new String[]{"TABLE"});

@@ -47,16 +47,16 @@ public class NestedGroupByAggregation extends JFrame {
 
         // place resultLabel
         JLabel resultLabel= new JLabel("Enter threshold and press \"Calculate Average Budget Over Status\"");
-        c.gridwidth = GridBagConstraints.RELATIVE;
-        c.insets = new Insets(0, 80, 80, 0);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 80, 0, 80);
         //c.anchor = GridBagConstraints.CENTER;
         gb.setConstraints(resultLabel, c);
         panel.add(resultLabel);
 
         // place the calculateAverage button
         JButton calculateAverageButton = new JButton("Calculate Average Budget Over Status");
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 80, 80);//80
+        //c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(20, 80, 80, 80);//80
         //c.anchor = GridBagConstraints.CENTER;
         gb.setConstraints(calculateAverageButton, c);
         panel.add(calculateAverageButton);
@@ -80,7 +80,7 @@ public class NestedGroupByAggregation extends JFrame {
         // make the window visible
         this.setVisible(true);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // place the cursor in the text field for the username
         thresholdField.requestFocus();
