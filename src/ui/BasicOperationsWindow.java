@@ -2,6 +2,8 @@ package ui;
 
 import database.DatabaseConnectionHandler;
 import delegates.MainWindowDelegate;
+import model.ArtistModel;
+import model.ArtworkModel;
 import model.EventModel;
 import util.PrintablePreparedStatement;
 
@@ -19,8 +21,10 @@ public class BasicOperationsWindow extends JFrame {
     private DatabaseConnectionHandler dbHandler;
     private Connection connection;
     DefaultTableModel eventTableModel;
+    DefaultTableModel artworkTableModel;
     DefaultTableModel artistTableModel;
     JTable eventTable;
+    JTable artworkTable;
     JTable artistTable;
     BasicOperationsWindow(MainWindowDelegate del, DatabaseConnectionHandler dbHandler) {
         super ("General Art Gallery Options");
@@ -42,21 +46,29 @@ public class BasicOperationsWindow extends JFrame {
         artistTableModel = new DefaultTableModel();
         artistTable = new JTable(artistTableModel);
 
+        artworkTableModel = new DefaultTableModel();
+        artworkTable = new JTable(artworkTableModel);
+
         JPanel eventPanel = new JPanel();
         JPanel artistPanel = new JPanel();
+        JPanel artworkPanel = new JPanel();
 
         tabbedPane.addTab("Event", eventPanel);
         tabbedPane.addTab("Artist", artistPanel);
+        tabbedPane.addTab("Artwork", artworkPanel);
 
         JScrollPane eventScrollPane = new JScrollPane(eventTable);
         JScrollPane artistScrollPane = new JScrollPane(artistTable);
+        JScrollPane artworkScrollPane = new JScrollPane(artworkTable);
 
         updateTable("Event", eventTableModel, eventTable);
         updateTable("Artist", artistTableModel, artistTable);
+        updateTable("Artwork", artworkTableModel, artworkTable);
 
         // adds buttons
         JPanel eventButtonsPanel = new JPanel();
         JPanel artistButtonsPanel = new JPanel();
+        JPanel artworkButtonsPanel = new JPanel();
 
         // INSERT BUTTONS
         JButton insertEventButton = new JButton("Insert Event");
@@ -69,18 +81,24 @@ public class BasicOperationsWindow extends JFrame {
         JButton deleteArtistButton = new JButton("Delete Artist");
         deleteArtistButton.addActionListener(new DeleteAction("Artist", artistTable, artistTableModel));
 
+        JButton insertArtworkButton = new JButton("Insert Artwork: ");
+        insertArtworkButton.addActionListener(new InsertArtworkAction());
 
         eventPanel.setLayout(new BoxLayout(eventPanel, BoxLayout.PAGE_AXIS ));
         artistPanel.setLayout(new BoxLayout(artistPanel, BoxLayout.PAGE_AXIS ));
+        artworkPanel.setLayout(new BoxLayout(artworkPanel, BoxLayout.PAGE_AXIS ));
 
         eventButtonsPanel.add(insertEventButton);
         eventButtonsPanel.add(deleteEventButton);
         artistButtonsPanel.add(insertArtistButton);
         artistButtonsPanel.add(deleteArtistButton);
+        artworkButtonsPanel.add(insertArtworkButton);
 
         eventPanel.add(eventButtonsPanel);
         artistPanel.add(artistButtonsPanel);
+        artworkPanel.add(artworkButtonsPanel);
 
+        artworkPanel.add(artworkScrollPane);
         eventPanel.add(eventScrollPane);
         artistPanel.add(artistScrollPane);
 
@@ -231,6 +249,31 @@ public class BasicOperationsWindow extends JFrame {
         }
 
     }
+
+    private class InsertArtworkAction extends AbstractAction {
+
+        InsertArtworkAction() {
+            super("Insert Artwork");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ArtworkInputDialog artworkInputDialog = new ArtworkInputDialog(BasicOperationsWindow.this);
+            artworkInputDialog.setVisible(true);
+            // Get the input event from the dialog
+            ArtworkModel artwork = artworkInputDialog.getArtwork();
+            try {
+                dbHandler.insertArtwork(artwork);
+                JOptionPane.showMessageDialog(BasicOperationsWindow.this,
+                        "Event inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                updateTable("Event", eventTableModel, eventTable);
+            } catch (SQLException ex) {
+                handleSQLException(ex);
+            }
+        }
+
+    }
     private class DeleteAction extends AbstractAction {
         private DefaultTableModel model;
         private JTable table;
@@ -335,6 +378,90 @@ public class BasicOperationsWindow extends JFrame {
 
         public EventModel getEvent() {
             return event;
+        }
+    }
+
+    private class ArtworkInputDialog extends JDialog{
+        private  JTextField artworkID;
+        private  JTextField artistID;
+        private  JTextField title;
+        private  JTextField dimensions;
+        private  JTextField dateCreated;
+        private  JTextField displayMedium;
+        private JTextField donorID;
+        private JTextField featureID;
+        private JTextField value;
+
+        private ArtworkModel artwork;
+
+        public ArtworkInputDialog(Frame owner) {
+            super(owner, "Enter Artwork Details", true);
+            setLayout(new GridLayout(6, 2));
+
+            artworkID = new JTextField(10);
+            artistID = new JTextField(10);
+            title = new JTextField(10);
+            dimensions = new JTextField(10);
+            dateCreated = new JTextField(10);
+            displayMedium = new JTextField(10);
+            donorID = new JTextField(10);
+            featureID = new JTextField(10);
+            value = new JTextField(10);
+
+            JButton okButton = new JButton("OK");
+            okButton.addActionListener(e -> {
+                try {
+                    artwork = new ArtworkModel(
+                            Integer.parseInt(artistID.getText()),
+                            Integer.parseInt(artworkID.getText()),
+                            title.getText(),
+                            dimensions.getText(),
+                            dateCreated.getText(),
+                            displayMedium.getText(),
+                            Integer.parseInt(donorID.getText()),
+                            Integer.parseInt(featureID.getText()),
+                            Integer.parseInt(value.getText())
+
+                    );
+                    //this
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(BasicOperationsWindow.this, "Invalid input. Please make sure all required fields are filled.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                dispose();
+            });
+
+            JButton cancelButton = new JButton("Cancel");
+            cancelButton.addActionListener(e -> dispose());
+            setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+            add(createInputPanel("ArtworkID:", artworkID));
+            add(createInputPanel("ArtistID:", artistID));
+            add(createInputPanel("Title:", title));
+            add(createInputPanel("Dimensions:", dimensions));
+            add(createInputPanel("Date Created:", dateCreated));
+            add(createInputPanel("Display Medium:", displayMedium));
+            add(createInputPanel("DonorID:", donorID));
+            add(createInputPanel("FeatureID:", featureID));
+            add(createInputPanel("Value ($):", value));
+
+
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.add(okButton);
+            buttonPanel.add(cancelButton);
+            add(buttonPanel);
+            pack();
+            setLocationRelativeTo(owner);
+        }
+        private JPanel createInputPanel(String labelText, JTextField textField) {
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+            panel.add(new JLabel(labelText));
+            panel.add(textField);
+            return panel;
+        }
+
+        public ArtworkModel getArtwork() {
+            return artwork;
         }
     }
 }
