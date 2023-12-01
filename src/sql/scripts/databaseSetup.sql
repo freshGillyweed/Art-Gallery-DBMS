@@ -36,14 +36,14 @@ CREATE TABLE Event (
 CREATE TABLE Curator
 (employeeID INTEGER PRIMARY KEY,
  specialization VARCHAR(50),
- FOREIGN KEY (employeeID) REFERENCES Employees(employeeID));
+ FOREIGN KEY (employeeID) REFERENCES Employees(employeeID)ON DELETE CASCADE);
 
 CREATE TABLE EventStaffSupervises
 (employeeID INTEGER PRIMARY KEY,
  department VARCHAR(50),
  eventID INTEGER NOT NULL,
  FOREIGN KEY (employeeID) REFERENCES Employees,
- FOREIGN KEY (eventID) REFERENCES Event(eventID));
+ FOREIGN KEY (eventID) REFERENCES Event(eventID)ON DELETE CASCADE);
 
 CREATE TABLE Researcher
 (employeeID INTEGER PRIMARY KEY,
@@ -132,7 +132,7 @@ CREATE TABLE ParticipateIn (
                                eventID INTEGER,
                                visitorID INTEGER,
                                PRIMARY KEY (eventID, visitorID),
-                               FOREIGN KEY (eventID) REFERENCES Event(eventID),
+                               FOREIGN KEY (eventID) REFERENCES Event(eventID) ON DELETE CASCADE,
                                FOREIGN KEY (visitorID) REFERENCES Visitor(visitorID)
 );
 
@@ -140,8 +140,8 @@ CREATE TABLE Host (
                       eventID INTEGER,
                       artistID INTEGER,
                       PRIMARY KEY (eventID, artistID),
-                      FOREIGN KEY (eventID) REFERENCES Event(eventID),
-                      FOREIGN KEY (artistID) REFERENCES Artist(artistID)
+                      FOREIGN KEY (eventID) REFERENCES Event(eventID) ON DELETE CASCADE,
+                      FOREIGN KEY (artistID) REFERENCES Artist(artistID) ON DELETE CASCADE
 );
 
 CREATE TABLE Visit (
