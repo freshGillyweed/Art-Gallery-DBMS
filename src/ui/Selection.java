@@ -22,7 +22,7 @@ public class Selection extends JFrame {
     public Selection(DatabaseConnectionHandler dbHandler) {
         super("View Filtered Information For Project");
         setSize(400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         this.dbHandler = dbHandler;

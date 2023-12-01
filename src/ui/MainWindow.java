@@ -114,6 +114,18 @@ public class MainWindow extends JFrame {
 
         panel.add(selectionButton);
 
+        //projection button
+        JButton projectionButton = new JButton("Access Information Across All Categories");
+        projectionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Projection window = new Projection(dbHandler);
+                window.showFrame();
+            }
+        });
+
+        panel.add(projectionButton);
+
         add(panel);
         setVisible(true);
     }
