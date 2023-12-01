@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
         this.delegate = del;
         this.dbHandler = dbHandler;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 300);
+        setSize(700, 500);
         setLocationRelativeTo(null);
     }
 
@@ -40,7 +40,16 @@ public class MainWindow extends JFrame {
             }
         });
 
-        panel.add(generalMenuButton);
+        JButton donationSummaryButton = new JButton("View Donor Donation Value Summary");
+        donationSummaryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GroupByAggregation window = new GroupByAggregation(delegate, dbHandler);
+                window.showFrame();
+            }
+        });
+
+        panel.add(donationSummaryButton);
 
         JButton projectBudgetButton = new JButton("Average Project Budget");
         projectBudgetButton.addActionListener(new ActionListener() {
@@ -51,6 +60,7 @@ public class MainWindow extends JFrame {
             }
         });
 
+        panel.add(generalMenuButton);
         // average project budget button
         panel.add(projectBudgetButton);
 
