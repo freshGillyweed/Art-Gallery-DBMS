@@ -175,6 +175,16 @@ public class DatabaseConnectionHandler {
         ps.close();
         // this should also delete the associated artwork pieces
     }
+
+    public void deleteEvent(int eventID) throws SQLException {
+        String query = "DELETE FROM Artist WHERE artistID = ?";
+        PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+        ps.setInt(1, eventID);
+        ps.executeUpdate();
+        connection.commit();
+        ps.close();
+        // this should also delete the associated artwork pieces
+    }
     private void dropBranchTableIfExists() {
         try {
             String query = "select table_name from user_tables";
