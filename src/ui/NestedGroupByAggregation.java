@@ -66,7 +66,7 @@ public class NestedGroupByAggregation extends JFrame {
                 // Resolve connection issue!! Make connection accessible from everywhere or pass as parameter
                 int threshold = Integer.parseInt(thresholdField.getText());
                 double average = dbHandler.getAverageBudgetOverStatus(threshold);
-                resultLabel.setText("Average spending for different project(Only projects with budgets over " + threshold + " are considered): " + average);
+                resultLabel.setText("Average spending for different project status (Only projects with budgets over " + threshold + " are considered): " + average);
             }
         });
 
