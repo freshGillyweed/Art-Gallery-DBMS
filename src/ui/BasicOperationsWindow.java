@@ -32,7 +32,7 @@ public class BasicOperationsWindow extends JFrame {
         this.dbHandler = dbHandler;
         this.connection = dbHandler.getConnection();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(300, 300);
+        setSize(500, 500);
         setLocationRelativeTo(null);
     }
 
