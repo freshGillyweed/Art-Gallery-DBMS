@@ -26,6 +26,7 @@ public class BasicOperationsWindow extends JFrame {
         super ("General Art Gallery Options");
         this.delegate = del;
         this.dbHandler = dbHandler;
+        this.connection = dbHandler.getConnection();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(300, 300);
         setLocationRelativeTo(null);
@@ -37,6 +38,7 @@ public class BasicOperationsWindow extends JFrame {
         eventTable = new JTable(eventTableModel);
         JScrollPane eventScrollPane = new JScrollPane(eventTable);
         tabbedPane.addTab("Event", eventScrollPane);
+        updateTable("Event", eventTableModel, eventTable);
 
         artistTableModel = new DefaultTableModel();
         artistTable = new JTable(artistTableModel);
@@ -67,6 +69,47 @@ public class BasicOperationsWindow extends JFrame {
 
 
     // HELPER METHODS
+    public void updateTable(String tableName, DefaultTableModel model, JTable table) {
+        try {
+            ResultSet rs = fetchTableData(tableName);
+            if (rs != null) {
+                // Clear existing table data and fetch metadata
+                model.setRowCount(0);
+                ResultSetMetaData metaData = rs.getMetaData();
+                int columnCount = metaData.getColumnCount();
+                // Create column names array
+                String[] columnNames = new String[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                    columnNames[i - 1] = metaData.getColumnName(i);
+                }
+
+                // Set column names to the model
+                model.setColumnIdentifiers(columnNames);
+
+
+                while (rs.next()) {
+                    Object[] rowData = new Object[columnCount];
+                    for (int i = 1; i <= columnCount; i++) {
+                        rowData[i - 1] = rs.getObject(i);
+                    }
+                    model.addRow(rowData);
+                }
+                rs.close();
+            }
+        } catch (SQLException ex) {
+            handleSQLException(ex);
+        }
+
+    }
+    private ResultSet fetchTableData(String tableName) {
+        return switch (tableName) {
+            case "Event" -> fetchEventData();
+            case "Employee" -> fetchEmployeeData();
+            case "Artwork" -> fetchArtworkData();
+            case "Artist" -> fetchArtistData();
+            default -> null;
+        };
+    }
 
     public ResultSet fetchEventData() {
         try {
@@ -158,6 +201,7 @@ public class BasicOperationsWindow extends JFrame {
                 JOptionPane.showMessageDialog(BasicOperationsWindow.this,
                         "Event inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
+                updateTable("Event", eventTableModel, eventTable);
             } catch (SQLException ex) {
                 handleSQLException(ex);
             }
