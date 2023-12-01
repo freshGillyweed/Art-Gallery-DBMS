@@ -61,7 +61,7 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    private void rollbackConnection() {
+    public void rollbackConnection() {
         try  {
             connection.rollback();
         } catch (SQLException e) {
@@ -93,7 +93,7 @@ public class DatabaseConnectionHandler {
         System.out.println("database has been reset to initial values!");
     }
 
-    private void insertEvent(EventModel event) throws SQLException{
+    public void insertEvent(EventModel event) throws SQLException{
         // CITE SAMPLE PROJECT
        // try {
             String query = "INSERT INTO EVENT VALUES (?,?,?,?,?,?,?)";
@@ -165,34 +165,21 @@ public class DatabaseConnectionHandler {
 //            handleSQLException(e);
 //        }
     }
-    private void handleSQLException(SQLException e) {
-        // potentially throw another exception for the GUI to handle
-        switch (e.getErrorCode()) {
-            case 1400 -> {
-                // insert null
-                // specify which value?
-                System.out.println("Error: Attempt to insert or update NULL into a NOT NULL column.");
-                rollbackConnection();
-            }
-            case 2291 -> {
-                System.out.println("Error: Attempt to insert a foreign key value that does not exist in the referenced table.");
-                rollbackConnection();
-            }
-            case 1 -> {
-                System.out.println("Error: Attempt to insert a non-unique value into a column with a unique constraint.");
-                rollbackConnection();
-            }
-            default -> {
-                System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-                rollbackConnection();
-            }
-        }
-    }
 
     public void deleteArtist(int artistID) throws SQLException {
         String query = "DELETE FROM Artist WHERE artistID = ?";
         PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
         ps.setInt(1, artistID);
+        ps.executeUpdate();
+        connection.commit();
+        ps.close();
+        // this should also delete the associated artwork pieces
+    }
+
+    public void deleteEvent(int eventID) throws SQLException {
+        String query = "DELETE FROM Artist WHERE artistID = ?";
+        PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+        ps.setInt(1, eventID);
         ps.executeUpdate();
         connection.commit();
         ps.close();
@@ -222,26 +209,74 @@ public class DatabaseConnectionHandler {
         return connection;
     }
 
-    public EventModel[] getAverageTicketsSoldPerEvent() throws SQLException {
-        String query = """
-                SELECT title, AVG(ticketsSold) as average_tickets_sold
-                FROM Event
-                GROUP BY title;""";
-        PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
-        ResultSet rs = ps.executeQuery();
-        ArrayList<EventModel> rows = new ArrayList<>();
-        while(rs.next()){
-           EventModel model = new EventModel(
-                   rs.getInt("ticketsSold"),
-                   rs.getString("location"),
-                   rs.getString("date"),
-                   rs.getInt("capacity"),
-                   rs.getInt("eventID"),
-                   rs.getString("title")
-           );
-           rows.add(model);
+    public ResultSet getArtworkValueSummary(String option) throws SQLException {
+        String query = "";
+        switch (option) {
+            case "average":
+                query = "SELECT DONORID, AVG(VALUE) as average_value " +
+                        "FROM ARTWORK " +
+                        "GROUP BY DONORID";
+                break;
+            case "minimum":
+                query = "SELECT DONORID, MIN(VALUE) as min_value " +
+                        "FROM ARTWORK " +
+                        "GROUP BY DONORID";
+                break;
+            case "maximum":
+                query = "SELECT DONORID, MAX(VALUE) as max_value " +
+                        "FROM ARTWORK " +
+                        "GROUP BY DONORID";
+                break;
+            case "count":
+                query = "SELECT DONORID,COUNT(VALUE) as count_value " +
+                        "FROM ARTWORK " +
+                        "GROUP BY DONORID";
+                break;
         }
-        return rows.toArray(new EventModel[rows.size()]);
+
+        PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+        return ps.executeQuery();
+    }
+    public ResultSet getAverageTicketsSoldPerEvent(String option) throws SQLException {
+        String query = "";
+        switch (option) {
+            case "average":
+                query = "SELECT title, AVG(ticketsSold) as average_tickets_sold " +
+                        "FROM Event " +
+                        "GROUP BY title";
+                break;
+            case "minimum":
+                query = "SELECT title, MIN(ticketsSold) as min_tickets_sold " +
+                        "FROM Event " +
+                        "GROUP BY title";
+                break;
+            case "maximum":
+                query = "SELECT title, MAX(ticketsSold) as max_tickets_sold " +
+                        "FROM Event " +
+                        "GROUP BY title";
+                break;
+            case "count":
+                query = "SELECT title, COUNT(ticketsSold) as count_tickets_sold " +
+                        "FROM Event " +
+                        "GROUP BY title";
+                break;
+        }
+
+        PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+        return ps.executeQuery();
+//        ArrayList<EventModel> rows = new ArrayList<>();
+//        while(rs.next()){
+//           EventModel model = new EventModel(
+//                   rs.getInt("ticketsSold"),
+//                   rs.getString("location"),
+//                   rs.getString("date"),
+//                   rs.getInt("capacity"),
+//                   rs.getInt("eventID"),
+//                   rs.getString("title")
+//           );
+//           rows.add(model);
+//        }
+//        return rows.toArray(new EventModel[rows.size()]);
     }
     public double getAverageBudgetOverStatus(int threshold) {
         //ProjectModel result = null;
