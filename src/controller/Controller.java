@@ -199,7 +199,6 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
 
     // =======================================================================
     // methods for division:
-
     // find every visitor who visited every exhibit
     public String[] getAllLoyalVisitors() throws Exception {
         ResultSet res;

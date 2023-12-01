@@ -88,7 +88,7 @@ public class MainWindow extends JFrame {
         });
 
         panel.add(joinButton);
-
+        
         // HAVING AGGREGATION
 
         JButton havingButton = new JButton("get countries by donations");
@@ -100,7 +100,6 @@ public class MainWindow extends JFrame {
 
 
         panel.add(havingButton);
-
         // selection button
 
         JButton selectionButton = new JButton("Get Project Information");

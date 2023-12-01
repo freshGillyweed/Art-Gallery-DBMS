@@ -4,9 +4,11 @@ import model.*;
 import util.PrintablePreparedStatement;
 import util.ScriptRunner;
 
+import java.awt.print.Printable;
 import java.io.Reader;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class handles all database related transactions
@@ -220,6 +222,27 @@ public class DatabaseConnectionHandler {
         return connection;
     }
 
+    public EventModel[] getAverageTicketsSoldPerEvent() throws SQLException {
+        String query = """
+                SELECT title, AVG(ticketsSold) as average_tickets_sold
+                FROM Event
+                GROUP BY title;""";
+        PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+        ResultSet rs = ps.executeQuery();
+        ArrayList<EventModel> rows = new ArrayList<>();
+        while(rs.next()){
+           EventModel model = new EventModel(
+                   rs.getInt("ticketsSold"),
+                   rs.getString("location"),
+                   rs.getString("date"),
+                   rs.getInt("capacity"),
+                   rs.getInt("eventID"),
+                   rs.getString("title")
+           );
+           rows.add(model);
+        }
+        return rows.toArray(new EventModel[rows.size()]);
+    }
     public double getAverageBudgetOverStatus(int threshold) {
         //ProjectModel result = null;
         double result = 0;
