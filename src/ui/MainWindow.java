@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class MainWindow extends JFrame {
 
@@ -16,7 +14,7 @@ public class MainWindow extends JFrame {
     private DatabaseConnectionHandler dbHandler;
 
     public MainWindow(MainWindowDelegate del, DatabaseConnectionHandler dbHandler) {
-        super("Main Window");
+        super("Art Gallery Operations");
         this.delegate = del;
         this.dbHandler = dbHandler;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
