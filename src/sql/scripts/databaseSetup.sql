@@ -288,6 +288,20 @@ INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
 VALUES (54, 'Vincent van Gogh', 'March 30, 1853', 'July 29, 1890', 92);
 INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
 VALUES (55, 'Gerhard Richter', 'February 9, 1932', NULL, 68);
+INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
+VALUES (56, 'Claude Monet', 'November 14, 1840', 'December 5, 1926', 88);
+
+INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
+VALUES (57, 'Georgia O''Keeffe', 'November 15, 1887', 'March 6, 1986', 84);
+
+INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
+VALUES (58, 'Salvador Dalí', 'May 11, 1904', 'January 23, 1989', 90);
+
+INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
+VALUES (59, 'Edvard Munch', 'December 12, 1863', 'January 23, 1944', 89);
+
+INSERT INTO Artist(artistID, name, DateOfBirth, DateOfDeath, skillLevel)
+VALUES (60, 'Frida Kahlo', 'July 6, 1907', 'July 13, 1954', 86);
 
 INSERT INTO Exhibition(exhibitionID, title, startDate, endDate, visitorCount, location, curatorID, rating)
 VALUES	(301, 'Emerging Echoes: New Artists Unveiled', '25/10/22', '9/8/23', 966178, 'room 15', 2000, 67);
@@ -310,6 +324,20 @@ INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, 
 VALUES(94, 55, 'Two Candles (Zwei Kerzen)', '47 1/4 × 39 1/2 in.', '1982', 9000000, 12, 305, 'painting');
 INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
 VALUES(95, 54, 'The Potato Eaters', '82 x 114 cm', '1885', 54000000, 14, 304, 'painting');
+INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
+VALUES (96, 52, 'Mona Lisa', '30 in by 20 in', '1503', 1000000000, 11, 301, 'painting');
+
+INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
+VALUES (97, 54, 'Starry Night', '29 in by 36 in', '1889', 85000000, 13, 302, 'painting');
+
+INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
+VALUES (98, 55, 'Portrait of Adele Bloch-Bauer I', '54 in by 54 in', '1907', 78000000, 14, 303, 'painting');
+
+INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
+VALUES (99, 53, 'Les Demoiselles d''Avignon', '8 ft by 7 ft', '1907', 120000000, 12, 304, 'painting');
+
+INSERT INTO Artwork(artworkID, artistID, title, dimensions, dateCreated, value, donorID, featureID, displayMedium)
+VALUES (100, 54, 'The Persistence of Memory', '9.5 in by 13 in', '1931', 95000000, 15, 305, 'painting');
 
 
 INSERT INTO ParticipateIn (eventID, visitorID) VALUES (101,1);
