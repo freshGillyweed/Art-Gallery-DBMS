@@ -1,9 +1,6 @@
 package database;
 
-import model.EmployeeModel;
-import model.EventModel;
-import model.EventStaffModel;
-import model.ProjectModel;
+import model.*;
 import util.PrintablePreparedStatement;
 import util.ScriptRunner;
 
@@ -94,9 +91,9 @@ public class DatabaseConnectionHandler {
         System.out.println("database has been reset to initial values!");
     }
 
-    private void insertEvent(EventModel event) {
+    private void insertEvent(EventModel event) throws SQLException{
         // CITE SAMPLE PROJECT
-        try {
+       // try {
             String query = "INSERT INTO EVENT VALUES (?,?,?,?,?,?,?)";
             PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
             ps.setInt(1, event.getEventID());
@@ -106,61 +103,100 @@ public class DatabaseConnectionHandler {
             ps.setInt(5,event.getCapacity());
             ps.setString(6, event.getTitle());
             ps.setNull(7, java.sql.Types.INTEGER);
-            // ps.setInt(7,event.getSupervisorID());
-            //Add guard for any values?
-            // TODO: should be able to handle case where FK val does not exist
-
             ps.executeUpdate();
             connection.commit();
 
             ps.close();
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            rollbackConnection();
-        }
+//        } catch (SQLException e) {
+//            handleSQLException(e);
+//        }
     }
 
-    private void insertEmployee(EmployeeModel employee) {
-        try {
+    private void insertEmployee(EmployeeModel employee) throws SQLException{
+      //  try {
             String query = "INSERT INTO EMPLOYEES VALUES (?,?,?)";
             PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
             ps.setInt(1,employee.getEmployeeID());
             ps.setString(2,employee.getPhoneNum());
             ps.setString(3, employee.getName());
-            // unique constraints??
             ps.executeUpdate();
             connection.commit();
 
             ps.close();
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            rollbackConnection();
-        }
+//        } catch (SQLException e) {
+//            handleSQLException(e);
+//        }
     }
 
-    private void insertEventStaffSupervision(EventStaffModel staff, EventModel event){
-        try {
+    private void insertEventStaffSupervision(EventStaffModel staff, EventModel event) throws SQLException {
+
             String query = "INSERT INTO EventStaffSupervises VALUES (?,?,?)";
             PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
             ps.setInt(1,staff.getEmployeeID());
             ps.setString(2,staff.getDepartment());
-            ps.setInt(3, event.getEventID()); // handle error when this is NULL
-            //Add guard for any values?
-            // TODO: should be able to handle case where FK val does not exist
-
+            ps.setInt(3, event.getEventID());
             ps.executeUpdate();
             connection.commit();
 
             ps.close();
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            rollbackConnection();
+//        } catch (SQLException e) {
+//            handleSQLException(e);
+//        }
+    }
+    public void insertArtwork(ArtworkModel art) throws SQLException {
+            // Check for null values
+            String query = "INSERT INTO Artwork VALUES (?,?,?,?,?,?,?,?,?)";
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            ps.setInt(1, art.getArtworkID());
+            ps.setInt(2, art.getArtistID());
+            ps.setString(3, art.getTitle()); // not null
+            ps.setString(4, art.getDimensions());
+            ps.setString(5, art.getDateCreated()); //not null
+            ps.setString(6, art.getDisplayMedium()); //not null
+            ps.setInt(7, art.getDonorID());
+            ps.setInt(8, art.getFeatureID());
+            ps.setInt(9, art.getValue());
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+//        } catch (SQLException e) {
+//            handleSQLException(e);
+//        }
+    }
+    private void handleSQLException(SQLException e) {
+        // potentially throw another exception for the GUI to handle
+        switch (e.getErrorCode()) {
+            case 1400 -> {
+                // insert null
+                // specify which value?
+                System.out.println("Error: Attempt to insert or update NULL into a NOT NULL column.");
+                rollbackConnection();
+            }
+            case 2291 -> {
+                System.out.println("Error: Attempt to insert a foreign key value that does not exist in the referenced table.");
+                rollbackConnection();
+            }
+            case 1 -> {
+                System.out.println("Error: Attempt to insert a non-unique value into a column with a unique constraint.");
+                rollbackConnection();
+            }
+            default -> {
+                System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+                rollbackConnection();
+            }
         }
     }
 
-
-        private void dropBranchTableIfExists() {
-        // TODO: IMPLEMENT
+    public void deleteArtist(int artistID) throws SQLException {
+        String query = "DELETE FROM Artist WHERE artistID = ?";
+        PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+        ps.setInt(1, artistID);
+        ps.executeUpdate();
+        connection.commit();
+        ps.close();
+        // this should also delete the associated artwork pieces
+    }
+    private void dropBranchTableIfExists() {
         try {
             String query = "select table_name from user_tables";
             PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
