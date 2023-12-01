@@ -3,6 +3,8 @@ package ui;
 import database.DatabaseConnectionHandler;
 import delegates.MainWindowDelegate;
 import model.EventModel;
+import util.PrintablePreparedStatement;
+
 import javax.swing.*;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
@@ -64,6 +66,51 @@ public class BasicOperationsWindow extends JFrame {
     }
 
 
+    // HELPER METHODS
+
+    public ResultSet fetchEventData() {
+        try {
+            String query = "SELECT * FROM Event";
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            return ps.executeQuery();
+        }catch (SQLException ex) {
+            handleSQLException(ex);
+        }
+        return null;
+    }
+
+    public ResultSet fetchEmployeeData() {
+        try {
+            String query = "SELECT * FROM Employees";
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            return ps.executeQuery();
+        }catch (SQLException ex) {
+            handleSQLException(ex);
+        }
+        return null;
+    }
+
+    public ResultSet fetchArtworkData() {
+        try {
+            String query = "SELECT * FROM ARTWORK";
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            return ps.executeQuery();
+        }catch (SQLException ex) {
+            handleSQLException(ex);
+        }
+        return null;
+    }
+
+    public ResultSet fetchArtistData()  {
+        try {
+            String query = "SELECT * FROM ARTIST";
+            PrintablePreparedStatement ps = new PrintablePreparedStatement(connection.prepareStatement(query), query, false);
+            return ps.executeQuery();
+        }catch (SQLException ex) {
+            handleSQLException(ex);
+        }
+        return null;
+    }
     private void handleSQLException(SQLException e) {
         // potentially throw another exception for the GUI to handle
         switch (e.getErrorCode()) {
@@ -91,7 +138,9 @@ public class BasicOperationsWindow extends JFrame {
             }
         }
     }
-    public class InsertEventAction extends AbstractAction {
+
+    // HELPER CLASSES FOR GUI
+    private class InsertEventAction extends AbstractAction {
 
         InsertEventAction() {
             super("Insert Event");
@@ -106,6 +155,8 @@ public class BasicOperationsWindow extends JFrame {
             EventModel event = eventDialog.getEvent();
             try {
                 dbHandler.insertEvent(event);
+                JOptionPane.showMessageDialog(BasicOperationsWindow.this,
+                        "Event inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (SQLException ex) {
                 handleSQLException(ex);
@@ -115,7 +166,7 @@ public class BasicOperationsWindow extends JFrame {
     }
 
     // this is for the inputting of new events , provides a user-friendly window with text fields
-    public class EventInputDialog extends JDialog {
+    private class EventInputDialog extends JDialog {
 
         private JTextField titleField;
         private JTextField ticketsSoldField;
