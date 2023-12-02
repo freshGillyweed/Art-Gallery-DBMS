@@ -66,14 +66,14 @@ public class MainWindow extends JFrame {
 
         // reset database button
 
-        JButton resetDatabaseButton = new JButton("Reset database");
-
-        resetDatabaseButton.addActionListener(e -> {
-            ResetDatabase resetDatabaseWindow = new ResetDatabase();
-            resetDatabaseWindow.showFrame(delegate);
-        });
-
-        panel.add(resetDatabaseButton);
+//        JButton resetDatabaseButton = new JButton("Reset database");
+//
+//        resetDatabaseButton.addActionListener(e -> {
+//            ResetDatabase resetDatabaseWindow = new ResetDatabase();
+//            resetDatabaseWindow.showFrame(delegate);
+//        });
+//
+//        panel.add(resetDatabaseButton);
 
         // update attribute button
 
