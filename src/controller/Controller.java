@@ -253,7 +253,8 @@ public class Controller implements LoginWindowDelegate, MainWindowDelegate {
     public String[] getDonorsValue(String op, int value) throws Exception {
         ResultSet res;
         ArrayList<String> out = new ArrayList<String>();
-        String query = "SELECT country FROM Donor GROUP BY country HAVING sum(totalDonationValue) " + op + " " + value + " ORDER BY sum(totalDonationValue) DESC";
+        String query = "SELECT country FROM Donor GROUP BY country HAVING sum(totalDonationValue) " + op
+                + " " + value + " ORDER BY sum(totalDonationValue) DESC";
         try {
             PrintablePreparedStatement ps = new PrintablePreparedStatement(
                     dbHandler.getConnection().prepareStatement(query), query, true);

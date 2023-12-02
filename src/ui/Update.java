@@ -21,7 +21,7 @@ public class Update extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-        JLabel prompt = new JLabel("Select the ID of an artwork you want to update:");
+        JLabel prompt = new JLabel("Select the title of an artwork you want to update:");
 
 
         JComboBox<String> artworks = new JComboBox<String>(delegate.getArtworkTitles());

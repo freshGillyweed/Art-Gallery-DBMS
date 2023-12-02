@@ -44,7 +44,7 @@ public class HavingAggregation extends JFrame {
 
         panel.add(inputPanel);
 
-        panel.add(new JLabel("names:"));
+        panel.add(new JLabel("countries:"));
 
         JTextArea area = new JTextArea();
         area.setEditable(false);
@@ -70,7 +70,7 @@ public class HavingAggregation extends JFrame {
                 }
                 submit.setText("Success!");
             } catch (Exception k) {
-                submit.setText("failed to get names");
+                submit.setText("failed to get countries");
             }
         });
         panel.add(submit);
