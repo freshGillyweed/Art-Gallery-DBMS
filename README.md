@@ -12,6 +12,6 @@ window labeled ‘Art Gallery Operations,’ users are able to choose either whi
 to perform or which information to view.
 
 해당 DBMS는 이벤트 관리, 전시 계획, 직원 및 프로젝트 관리 등 미술관을 운영하는데 있어 필요한 다양한 데이터를 관리한다. 프로그램 실행 후 나타나는 메인 gui 창인 'Art Gallery Operations'로부터 사용자들은 원하는 transaction을 실행하거나 원하는 정보를 확인할 수 있다.
-해당 프로젝트는 University of British Columbia에 컴퓨터과학 교환학생으로 파견되어 현지 학생들과 완성하였다.
+해당 프로젝트는 University of British Columbia에 컴퓨터과학 전공 교환학생으로 파견되어 현지 학생들과 완성하였으며, 구체적인 기획부터 implementation까지의 과정과 사용법은 동일 repo내의 milestone pdf들을 통해 확인할 수 있다. 
 
 
